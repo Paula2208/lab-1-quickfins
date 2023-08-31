@@ -108,6 +108,7 @@ export default function Home() {
           </p>
         </a>
       </div>
+      <div className="text-red">Hola Pau</div>
     </main>
   )
 }
