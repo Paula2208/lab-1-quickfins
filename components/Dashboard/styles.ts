@@ -13,11 +13,13 @@ export const Content = styled.div`
   text-align: flex-start;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: minmax(100vh, auto) 30px;
+  grid-template-rows: 1fr 30px;
   overflow: scroll;
 `;
 
 export const PageContainer = styled.div`
-  width: 100%;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;

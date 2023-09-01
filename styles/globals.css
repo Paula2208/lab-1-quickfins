@@ -2,6 +2,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --violet: #6550EA;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,8 +22,28 @@ body {
   width: 100vw;
   color: black;
   font-family: Verdana;
+  position: relative;
 }
 
 a {
   text-decoration: none;
+}
+
+.card {
+  border: 0px;
+  background-color: var(--violet);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.card-body{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.card-title{
+  font-weight: 700;
 }

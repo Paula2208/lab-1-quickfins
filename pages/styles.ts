@@ -1,10 +1,11 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "styled-components";
 
 export const GridCards = styled.div`
     color: black;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-template-rows: 1fr 1fr;
     grid-gap: 10px;
 `;
@@ -24,7 +25,7 @@ export const HomeText = styled.div`
 
 export const HomeTile = styled.header`
   display: flex;
-  background: #6550EA;
+  background: var(--violet);
   align-items: center;
   justify-content: flex-start;
   width: fit-content;
@@ -48,7 +49,7 @@ export const HomeTile = styled.header`
 export const HomeCredits = styled.header`
   display: flex;
   flex-direction: column;
-  background: #6550EA;
+  background: var(--violet);
   align-items: flex-start;
   justify-content: center;
   width: fit-content;
@@ -81,4 +82,22 @@ export const NamesTeam = styled.div`
 
 export const NameHome = styled.div`
 
+`;
+
+export const DivideLine = styled.div`
+  background-color: white;
+  height: 1px;
+  border-radius:2px;
+  width: 100%;
+`;
+
+export const ShowMore = styled.div`
+  font-size: 14px;
+  color: violet;
+  cursor: pointer;
+  text-decoration: underline;
+`;
+
+export const IconClicker = styled(FontAwesomeIcon)`
+  cursor: pointer;
 `;

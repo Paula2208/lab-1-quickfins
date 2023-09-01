@@ -1,11 +1,7 @@
 import Link from "next/link";
 import { HeaderContainer, ItemTitle, TitleContainer, WrapperItems } from "./styled";
 import { useRouter } from "next/router";
-
-interface RouteTitles {
-  label: string;
-  route: string;
-}
+import RouteTitles from "../../interfaces/Routing";
 
 export default function Header() {
 

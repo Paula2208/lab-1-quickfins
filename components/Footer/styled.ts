@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const FooterContainer = styled.div`
   display: flex;
-  background: #6550EA;
+  background: var(--violet);
   align-items: center;
   justify-content: flex-start;
   

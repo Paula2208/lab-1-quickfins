@@ -6,7 +6,7 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: flex-start;
   
-  color: #6550EA;
+  color: var(--violet);
   font-family: Verdana;
   font-weight: 400;
   padding: 0px 10px;
@@ -22,14 +22,14 @@ export const HeaderContainer = styled.header`
 
 export const TitleContainer = styled.div`
   font-weight: 700;
-  color: #6550EA;
+  color: var(--violet);
 `;
 
 export const ItemTitle = styled.div<{ isActive: boolean; }>`
   font-weight: ${(props) => props.isActive ? '700' : '400'};
-  color: #6550EA;
+  color: var(--violet);
   font-size: 14px;
-  border-bottom: ${(props) => props.isActive ? '3px solid #6550EA' : '0px'};
+  border-bottom: ${(props) => props.isActive ? '3px solid var(--violet)' : '0px'};
   height: 100%;
   padding-bottom: 10px;
 `;
