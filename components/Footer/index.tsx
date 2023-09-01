@@ -15,6 +15,8 @@ export default function Footer() {
             </RowColumn>
 
             <NameTeam>1 Septiembre de 2023 - Universidad Nacional de Colombia</NameTeam>
+
+            <NameTeam>Ingeniería de Software II - 2023-2s</NameTeam>
         </FooterContainer>
     );
 }

@@ -3,6 +3,7 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
   --violet: #6550EA;
+  --violet-light: #716b9d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,4 +47,12 @@ a {
 
 .card-title{
   font-weight: 700;
+}
+
+.table{
+  width: 100%;
+}
+
+th{
+  color: var(--violet);
 }

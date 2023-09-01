@@ -7,7 +7,7 @@ import PeopleCenter from "./peopleCenter";
 import { useState } from "react";
 
 
-export default function CardPeople() {
+export default function CardPeople({ person }:{ person: PersonItem }) {
 
     const [showComplete, setShowComplete] = useState<boolean>(false);
 
@@ -37,13 +37,4 @@ export default function CardPeople() {
             {showComplete && <PeopleCenter hide={() => setShowComplete(false)}/>}
         </>
     );
-}
-
-const person: PersonItem = {
-    name: 'Paula Guzmán',
-    id: 1,
-    age: 21,
-    phone: 300000000,
-    gender: 'Mujer',
-    birthday: '22/08/2002',
 }

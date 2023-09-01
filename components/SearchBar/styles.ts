@@ -8,6 +8,7 @@ export const InputIcon = styled.div`
     border-radius: 20px;
     color: black;
     padding:5px 20px;
+    align-items: center;
 `;
 
 export const InputStyled = styled.input`

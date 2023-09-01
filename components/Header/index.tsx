@@ -21,8 +21,6 @@ export default function Header() {
       route: '/living'
     }]
 
-  console.log(router)
-
   return (
     <HeaderContainer>
       <Link href="/">

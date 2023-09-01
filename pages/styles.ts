@@ -5,7 +5,7 @@ export const GridCards = styled.div`
     color: black;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 272px));
     grid-template-rows: 1fr 1fr;
     grid-gap: 10px;
 `;
@@ -91,6 +91,10 @@ export const DivideLine = styled.div`
   width: 100%;
 `;
 
+export const DivideLineDark = styled(DivideLine)`
+  background-color: var(--violet-light);
+`;
+
 export const ShowMore = styled.div`
   font-size: 14px;
   color: violet;
@@ -100,4 +104,26 @@ export const ShowMore = styled.div`
 
 export const IconClicker = styled(FontAwesomeIcon)`
   cursor: pointer;
+`;
+
+export const ButtonAct = styled.div`
+  cursor: pointer;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: violet;
+  color: white;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.28);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.28);
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.28);
+  display: flex;
+  justify-content: center;
+`;
+
+export const UpperRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 0.2fr;
+  grid-template-rows: 1fr;
+  grid-gap: 30px;
 `;
