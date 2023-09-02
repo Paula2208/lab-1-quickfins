@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Modal from "../../Modal";
 import { toast } from 'react-toastify';
-import { ModalTitle, ModalHeader } from "../../Modal/styles";
+import { ModalTitle, ModalHeader, GridTwoModal, TopicModalItem, TopicModalTitle } from "../../Modal/styles";
 import { LivingItemExtended } from "../../../interfaces/Living";
+import Table from "../../Table";
 
 type LivingCenterProps = {
     hide: () => void,
@@ -64,12 +65,76 @@ export default function LivingCenter({ hide }: LivingCenterProps) {
             <ModalTitle>{living.address}</ModalTitle>
 
             <ModalHeader>Información General</ModalHeader>
+            <GridTwoModal rows={4}>
+                <TopicModalTitle>ID</TopicModalTitle>
+                <TopicModalItem>{`${living.id}`}</TopicModalItem>
+
+                <TopicModalTitle>Estrato</TopicModalTitle>
+                <TopicModalItem>{`${living.layer}`}</TopicModalItem>
+
+                <TopicModalTitle>Municipio</TopicModalTitle>
+                <TopicModalItem>{`${living.state.name}`}</TopicModalItem>
+
+                <TopicModalTitle>ID Municipio</TopicModalTitle>
+                <TopicModalItem>{`${living.state.id}`}</TopicModalItem>
+            </GridTwoModal>
+
+            <ModalHeader>Propietario</ModalHeader>
+            <GridTwoModal rows={2}>
+                <TopicModalTitle>Nombre</TopicModalTitle>
+                <TopicModalItem>{`${living.owner.name}`}</TopicModalItem>
+
+                <TopicModalTitle>ID Propietario</TopicModalTitle>
+                <TopicModalItem>{`${living.owner.id}`}</TopicModalItem>
+
+                <TopicModalTitle>ID Municipio</TopicModalTitle>
+                <TopicModalItem>{`${living.state.id}`}</TopicModalItem>
+            </GridTwoModal>
 
             <ModalHeader>Características</ModalHeader>
+            <GridTwoModal rows={4}>
+                <TopicModalTitle>Área</TopicModalTitle>
+                <TopicModalItem>{`${living.area}`}</TopicModalItem>
 
-            <ModalHeader>Habitantes</ModalHeader>
+                <TopicModalTitle>Capacidad</TopicModalTitle>
+                <TopicModalItem>{`${living.capacity}`}</TopicModalItem>
 
-            <ModalHeader>Datos de Venta</ModalHeader>
+                <TopicModalTitle>Niveles</TopicModalTitle>
+                <TopicModalItem>{`${living.levels}`}</TopicModalItem>
+
+                <TopicModalTitle>Baños</TopicModalTitle>
+                <TopicModalItem>{`${living.baths}`}</TopicModalItem>
+            </GridTwoModal>
+
+            {(living.sale.onSale) && (
+                <ModalHeader>Información de Venta</ModalHeader>
+            )}
+
+            {(living.sale.onSale) && (
+                <GridTwoModal rows={4}>
+                    <TopicModalTitle>ID Venta</TopicModalTitle>
+                    <TopicModalItem>{`${living.sale.idSale}`}</TopicModalItem>
+
+                    <TopicModalTitle>Precio</TopicModalTitle>
+                    <TopicModalItem>{`${living.sale.price}`}</TopicModalItem>
+
+                    <TopicModalTitle>Estado</TopicModalTitle>
+                    <TopicModalItem>{`${living.sale.state}`}</TopicModalItem>
+
+                    <TopicModalTitle>Fecha de Publicación</TopicModalTitle>
+                    <TopicModalItem>{`${living.sale.publication}`}</TopicModalItem>
+                </GridTwoModal>
+            )}
+
+            <ModalHeader>Residentes</ModalHeader>
+            <Table 
+                headers={['Nombre', 'Teléfono']} 
+                items={living.residents.map((l) => ({
+                    id: `${l.id}`,
+                    labels: [l.name, `${l.phone}`]
+                }))}
+            />
+
         </Modal>
     );
 }
@@ -82,6 +147,120 @@ const living: LivingItemExtended = {
     baths: 2,
     layer: 3,
     area: 400.2,
+
+    residents: [{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },{
+        name: 'Paula Guzmán',
+        id: 1,
+        age: 21,
+        phone: 300000000,
+        gender: 'Mujer',
+        birthday: '22/08/2002',
+    },],
 
     state: {
         id: 1,
@@ -103,5 +282,6 @@ const living: LivingItemExtended = {
         price: 10000000000,
         state: 'en venta',
         publication: '01/08/2023',
+        onSale: true,
     },
 }

@@ -7,7 +7,7 @@ import LivingCenter from "./livingCenter";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 
-export default function CardLiving() {
+export default function CardLiving({ living }:{ living: LivingItem }) {
 
     const [showComplete, setShowComplete] = useState<boolean>(false);
 
@@ -37,14 +37,4 @@ export default function CardLiving() {
             {showComplete && <LivingCenter hide={() => setShowComplete(false)}/>}
         </>
     );
-}
-
-const living: LivingItem = {
-    id: 1,
-    address: 'Carrera 15',
-    capacity: 5,
-    levels: 3,
-    baths: 2,
-    layer: 3,
-    area: 400.2,
 }

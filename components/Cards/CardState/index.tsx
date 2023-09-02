@@ -7,7 +7,7 @@ import StateItem from "../../../interfaces/State";
 import { TitleCardWrapper, TitleCardContent } from "../CardPeople/styles";
 
 
-export default function CardState() {
+export default function CardState({ state }:{ state: StateItem }) {
 
     const [showComplete, setShowComplete] = useState<boolean>(false);
 
@@ -37,11 +37,4 @@ export default function CardState() {
             {showComplete && <StateCenter hide={() => setShowComplete(false)}/>}
         </>
     );
-}
-
-const state: StateItem = {
-    id: 1,
-    name: 'Cúcuta',
-    area: 109820394.93,
-    budget: 1223438543,
 }
