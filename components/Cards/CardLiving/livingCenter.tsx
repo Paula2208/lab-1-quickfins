@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../Modal";
 import { toast } from 'react-toastify';
 import { ModalTitle, ModalHeader, GridTwoModal, TopicModalItem, TopicModalTitle } from "../../Modal/styles";
 import LivingItem, { LivingItemExtended, mockLivingExtended } from "../../../interfaces/Living";
 import Table from "../../Table";
+import { layer } from "@fortawesome/fontawesome-svg-core";
+import states from "../../../pages/states";
+import { InputForm, ButtonAct } from "../../../styles/styles";
+import Selector from "../../Selector";
+import StateItem from "../../../interfaces/State";
+import { getStates } from "../../../helpers/state";
 
 type LivingCenterProps = {
     hide: () => void,
@@ -12,8 +18,20 @@ type LivingCenterProps = {
 
 export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     const [isUpdate, setIsUpdate] = useState<boolean>(false);
-    const [living, setLiving] = useState<LivingItemExtended>({...mockLivingExtended});
+    const [living, setLiving] = useState<LivingItemExtended>({ ...mockLivingExtended });
+    const [address, setAddress] = useState<string>(livingBasic.address);
+    const [layer, setLayer] = useState<number>(livingBasic.layer);
+    const [capacity, setCapacity] = useState<number>(livingBasic.capacity);
+    const [levels, setLevels] = useState<number>(livingBasic.levels);
+    const [baths, setBaths] = useState<number>(livingBasic.baths);
+    const [area, setArea] = useState<number>(livingBasic.area);
+    const [state, setState] = useState<number>(livingBasic.stateID);
+    const [states, setStates] = useState<StateItem[]>([]);
+    const [owner, setOwner] = useState<number>(0);
+    const [onSale, setOnSale] = useState<boolean>(false);
 
     const handleDelete = () => {
         fetch(`${process.env.API_URL || ''}/viviendas/${livingBasic.id || ''}`, {
@@ -40,7 +58,19 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
     const saveUpdate = () => {
         fetch(`${process.env.API_URL || ''}/viviendas/${livingBasic.id}`, {
             method: 'PUT',
-            body: JSON.stringify({}),
+            body: JSON.stringify({
+                "direccion": address,
+                "capacidad": capacity,
+                "niveles": levels,
+                "baños": baths,
+                "estrato": layer,
+                "area": area,
+                "idMunicipio": state,
+                "idVivienda": livingBasic.id,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
         })
             .then((res: any) => {
                 return res.json();
@@ -56,6 +86,10 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
             });
     }
 
+    useEffect(() => {
+        getStates(setStates);
+    }, [])
+
     return (
         <Modal
             hide={hide}
@@ -63,78 +97,151 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
             handleDelete={handleDelete}
             handleUpdate={handleUpdate}
         >
-            <ModalTitle>{livingBasic.address}</ModalTitle>
+            {isUpdate ? (
+                <>
+                    <InputForm
+                        placeholder="Dirección de la vivienda"
+                        onChange={(e) => setAddress(e.currentTarget.value)}
+                        value={address}
+                    />
 
-            <ModalHeader>Información General</ModalHeader>
-            <GridTwoModal rows={4}>
-                <TopicModalTitle>ID</TopicModalTitle>
-                <TopicModalItem>{`${livingBasic.id}`}</TopicModalItem>
+                    <ModalHeader>Información General</ModalHeader>
+                    <GridTwoModal rows={2}>
 
-                <TopicModalTitle>Estrato</TopicModalTitle>
-                <TopicModalItem>{`${livingBasic.layer}`}</TopicModalItem>
+                        <TopicModalTitle>Estrato</TopicModalTitle>
+                        <InputForm
+                            type="number"
+                            onChange={(e) => setLayer(parseInt(e.currentTarget.value))}
+                            value={layer}
+                        />
 
-                <TopicModalTitle>Municipio</TopicModalTitle>
-                <TopicModalItem>{`${living.state.name}`}</TopicModalItem>
+                        <TopicModalTitle>Municipio</TopicModalTitle>
+                        <Selector
+                            options={states.map(s => ({ label: s.name, value: s.id }))}
+                            setSelected={setState}
+                            selected={state}
+                            placeholder={" "}
+                        />
+                    </GridTwoModal>
 
-                <TopicModalTitle>ID Municipio</TopicModalTitle>
-                <TopicModalItem>{`${livingBasic.stateID}`}</TopicModalItem>
-            </GridTwoModal>
+                    <ModalHeader>Características</ModalHeader>
+                    <GridTwoModal rows={4}>
+                        <TopicModalTitle>Área</TopicModalTitle>
+                        <InputForm
+                            placeholder=" "
+                            type="number"
+                            onChange={(e) => setArea(parseInt(e.currentTarget.value))}
+                            value={area}
+                        />
 
-            <ModalHeader>Propietario</ModalHeader>
-            <GridTwoModal rows={2}>
-                <TopicModalTitle>Nombre</TopicModalTitle>
-                <TopicModalItem>{`${living.owner.name}`}</TopicModalItem>
+                        <TopicModalTitle>Capacidad</TopicModalTitle>
+                        <InputForm
+                            placeholder=" "
+                            type="number"
+                            onChange={(e) => setCapacity(parseInt(e.currentTarget.value))}
+                            value={capacity}
+                        />
 
-                <TopicModalTitle>ID Propietario</TopicModalTitle>
-                <TopicModalItem>{`${living.owner.id}`}</TopicModalItem>
+                        <TopicModalTitle>Niveles</TopicModalTitle>
+                        <InputForm
+                            placeholder=" "
+                            type="number"
+                            onChange={(e) => setLevels(parseInt(e.currentTarget.value))}
+                            value={levels}
+                        />
 
-                <TopicModalTitle>ID Municipio</TopicModalTitle>
-                <TopicModalItem>{`${living.state.id}`}</TopicModalItem>
-            </GridTwoModal>
+                        <TopicModalTitle>Baños</TopicModalTitle>
+                        <InputForm
+                            placeholder=" "
+                            type="number"
+                            onChange={(e) => setBaths(parseInt(e.currentTarget.value))}
+                            value={baths}
+                        />
+                    </GridTwoModal>
 
-            <ModalHeader>Características</ModalHeader>
-            <GridTwoModal rows={4}>
-                <TopicModalTitle>Área</TopicModalTitle>
-                <TopicModalItem>{`${(livingBasic.area || '').toLocaleString()} m²`}</TopicModalItem>
+                    <ButtonAct onClick={saveUpdate}>
+                        {!loading ? 'Save' : (
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        )}
+                    </ButtonAct>
+                </>
+            ) : (
+                <>
+                    <ModalTitle>{livingBasic.address}</ModalTitle>
 
-                <TopicModalTitle>Capacidad</TopicModalTitle>
-                <TopicModalItem>{`${livingBasic.capacity}`}</TopicModalItem>
+                    <ModalHeader>Información General</ModalHeader>
+                    <GridTwoModal rows={4}>
+                        <TopicModalTitle>ID</TopicModalTitle>
+                        <TopicModalItem>{`${livingBasic.id}`}</TopicModalItem>
 
-                <TopicModalTitle>Niveles</TopicModalTitle>
-                <TopicModalItem>{`${livingBasic.levels}`}</TopicModalItem>
+                        <TopicModalTitle>Estrato</TopicModalTitle>
+                        <TopicModalItem>{`${livingBasic.layer}`}</TopicModalItem>
 
-                <TopicModalTitle>Baños</TopicModalTitle>
-                <TopicModalItem>{`${livingBasic.baths}`}</TopicModalItem>
-            </GridTwoModal>
+                        <TopicModalTitle>Municipio</TopicModalTitle>
+                        <TopicModalItem>{`${living.state.name}`}</TopicModalItem>
 
-            {/*(living.sale.onSale) && (
-                <ModalHeader>Información de Venta</ModalHeader>
-            )}
+                        <TopicModalTitle>ID Municipio</TopicModalTitle>
+                        <TopicModalItem>{`${livingBasic.stateID}`}</TopicModalItem>
+                    </GridTwoModal>
 
-            {(living.sale.onSale) && (
-                <GridTwoModal rows={4}>
-                    <TopicModalTitle>ID Venta</TopicModalTitle>
-                    <TopicModalItem>{`${living.sale.idSale}`}</TopicModalItem>
+                    <ModalHeader>Propietario</ModalHeader>
+                    <GridTwoModal rows={2}>
+                        <TopicModalTitle>Nombre</TopicModalTitle>
+                        <TopicModalItem>{`${living.owner.name}`}</TopicModalItem>
 
-                    <TopicModalTitle>Precio</TopicModalTitle>
-                    <TopicModalItem>{`${living.sale.price}`}</TopicModalItem>
+                        <TopicModalTitle>ID Propietario</TopicModalTitle>
+                        <TopicModalItem>{`${living.owner.id}`}</TopicModalItem>
 
-                    <TopicModalTitle>Estado</TopicModalTitle>
-                    <TopicModalItem>{`${living.sale.state}`}</TopicModalItem>
+                        <TopicModalTitle>ID Municipio</TopicModalTitle>
+                        <TopicModalItem>{`${living.state.id}`}</TopicModalItem>
+                    </GridTwoModal>
 
-                    <TopicModalTitle>Fecha de Publicación</TopicModalTitle>
-                    <TopicModalItem>{`${living.sale.publication}`}</TopicModalItem>
-                </GridTwoModal>
-            )*/}
+                    <ModalHeader>Características</ModalHeader>
+                    <GridTwoModal rows={4}>
+                        <TopicModalTitle>Área</TopicModalTitle>
+                        <TopicModalItem>{`${(livingBasic.area || '').toLocaleString()} m²`}</TopicModalItem>
 
-            <ModalHeader>Residentes</ModalHeader>
-            <Table 
-                headers={['Nombre', 'Teléfono']} 
-                items={living.residents.map((l) => ({
-                    id: `${l.id}`,
-                    labels: [l.name, `${l.phone}`]
-                }))}
-            />
+                        <TopicModalTitle>Capacidad</TopicModalTitle>
+                        <TopicModalItem>{`${livingBasic.capacity}`}</TopicModalItem>
+
+                        <TopicModalTitle>Niveles</TopicModalTitle>
+                        <TopicModalItem>{`${livingBasic.levels}`}</TopicModalItem>
+
+                        <TopicModalTitle>Baños</TopicModalTitle>
+                        <TopicModalItem>{`${livingBasic.baths}`}</TopicModalItem>
+                    </GridTwoModal>
+
+                    {/*(living.sale.onSale) && (
+    <ModalHeader>Información de Venta</ModalHeader>
+)}
+
+{(living.sale.onSale) && (
+    <GridTwoModal rows={4}>
+        <TopicModalTitle>ID Venta</TopicModalTitle>
+        <TopicModalItem>{`${living.sale.idSale}`}</TopicModalItem>
+
+        <TopicModalTitle>Precio</TopicModalTitle>
+        <TopicModalItem>{`${living.sale.price}`}</TopicModalItem>
+
+        <TopicModalTitle>Estado</TopicModalTitle>
+        <TopicModalItem>{`${living.sale.state}`}</TopicModalItem>
+
+        <TopicModalTitle>Fecha de Publicación</TopicModalTitle>
+        <TopicModalItem>{`${living.sale.publication}`}</TopicModalItem>
+    </GridTwoModal>
+)*/}
+
+                    <ModalHeader>Residentes</ModalHeader>
+                    <Table
+                        headers={['Nombre', 'Teléfono']}
+                        items={living.residents.map((l) => ({
+                            id: `${l.id}`,
+                            labels: [l.name, `${l.phone}`]
+                        }))}
+                    />
+                </>)}
 
         </Modal>
     );

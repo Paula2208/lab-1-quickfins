@@ -97,7 +97,7 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
     return (
         <Modal
             hide={hide}
-            type="PERSON"
+            type="STATE"
         >
             <InputForm
                 placeholder="Nombre del municipio"
