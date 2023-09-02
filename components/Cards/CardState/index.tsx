@@ -29,8 +29,8 @@ export default function CardState({ state }:{ state: StateItem }) {
 
                     <DivideLine />
 
-                    <div className="card-text">Área: {`${state.area}`} m²</div>
-                    <div className="card-text">Presupuesto: ${`${state.budget}`} COP</div>
+                    <div className="card-text">Área: {`${state.area.toLocaleString()}`} m²</div>
+                    <div className="card-text">Presupuesto: ${`${state.budget.toLocaleString()}`} COP</div>
                     <ShowMore onClick={() => setShowComplete(true)}>Mostrar Más</ShowMore>
                 </div>
             </div>

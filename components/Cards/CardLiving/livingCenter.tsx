@@ -264,7 +264,7 @@ const living: LivingItemExtended = {
 
     state: {
         id: 1,
-        name: 'Cúcuta',
+        name: 'Cucuta',
         area: 109820394.93,
         budget: 1,
     },

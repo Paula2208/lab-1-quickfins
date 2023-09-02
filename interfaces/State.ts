@@ -13,3 +13,10 @@ export interface StateItemExtended extends StateItem{
     livings: LivingItem[];
     people: PersonItem[];
 }
+
+export const mockState = {
+    id: 0,
+    name: '',
+    area: 0,
+    budget: 0,
+}

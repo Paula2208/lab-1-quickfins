@@ -2,38 +2,13 @@ import type { NextPage } from "next";
 import { ButtonAct, GridCards, UpperRow } from "../styles";
 import CardState from "../../components/Cards/CardState";
 import SearchBar from "../../components/SearchBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StateItem from "../../interfaces/State";
+import { getStates } from "../../helpers/state";
 
 const States: NextPage = () => {
-  const states: StateItem[] = [{
-    id: 1,
-    name: 'Cúcuta',
-    area: 109820394.93,
-    budget: 1223438543,
-  }, {
-    id: 1,
-    name: 'Cúcuta',
-    area: 109820394.93,
-    budget: 1223438543,
-  }, {
-    id: 1,
-    name: 'Cúcuta',
-    area: 109820394.93,
-    budget: 1223438543,
-  }, {
-    id: 1,
-    name: 'Cúcuta',
-    area: 109820394.93,
-    budget: 1223438543,
-  }, {
-    id: 1,
-    name: 'Cúcuta',
-    area: 109820394.93,
-    budget: 1223438543,
-  }];
-
   const [search, setSearch] = useState<string>('');
+  const [states, setStates] = useState<StateItem[]>([]);
 
   const getFiltered = (): StateItem[] => {
     return states.filter(p => {
@@ -47,6 +22,10 @@ const States: NextPage = () => {
       return false;
     })
   }
+
+  useEffect(() => {
+    getStates(setStates);
+  }, [])
 
   return (
     <>

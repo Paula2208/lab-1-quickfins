@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 
 export const TableWrapper = styled.div`
-  height: 150px;
-  min-height: 150px;
+  max-height: 150px;
+  min-height: 95px;
   overflow: scroll;
   border-radius: 10px;
   border: 1px solid var(--violet);
