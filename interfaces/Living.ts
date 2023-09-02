@@ -15,6 +15,7 @@ export interface LivingItemExtended extends LivingItem {
     state: StateItem;
     owner: PersonItem;
     sale: SaleItem;
+    residents: PersonItem[];
 }
 
 export interface SaleItem {
@@ -23,4 +24,5 @@ export interface SaleItem {
     price: number;
     state: string;
     publication: string;
+    onSale: boolean;
 }

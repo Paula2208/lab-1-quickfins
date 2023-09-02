@@ -427,9 +427,10 @@ const People: NextPage = () => {
     gender: 'Mujer',
     birthday: '22/08/2002',
   }];
+  
   const [search, setSearch] = useState<string>('');
 
-  const getFilterd = (): PersonItem[] => {
+  const getFiltered = (): PersonItem[] => {
     return people.filter(p => {
       if (search === '') return true;
 
@@ -450,7 +451,7 @@ const People: NextPage = () => {
       </UpperRow>
       
       <GridCards>
-        {getFilterd().map((p) => (
+        {getFiltered().map((p) => (
           <CardPeople key={p.id} person={p} />
         ))}
       </GridCards>
