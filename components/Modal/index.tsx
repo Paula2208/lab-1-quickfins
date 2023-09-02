@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type ModalProps = {
     children: React.ReactNode,
     hide: () => void,
-    handleDelete: () => void,
-    handleUpdate: () => void,
+    handleDelete?: () => void,
+    handleUpdate?: () => void,
     type?: 'STATE' | 'PERSON' | 'LIV',
 };
 
@@ -37,19 +37,19 @@ export default function Modal({
 
                     <DivModal>
 
-                        <IconClicker
+                        {handleDelete && <IconClicker
                             icon={faTrash}
                             size="lg"
                             color="red"
                             onClick={handleDelete}
-                        />
+                        />}
 
-                        <IconClicker
+                        {handleUpdate && <IconClicker
                             icon={faPen}
                             size="lg"
                             color="#9900cc"
                             onClick={handleUpdate}
-                        />
+                        />}
 
 
                         <IconClicker

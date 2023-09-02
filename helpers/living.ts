@@ -18,7 +18,8 @@ export const getLivings = (
                     levels: s.niveles,
                     baths: s.baños,
                     layer: s.estrato,
-                    area: s.area
+                    area: s.area,
+                    stateID: s.idMunicipio
                 })));
                 return;
             }

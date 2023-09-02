@@ -7,3 +7,8 @@ export interface TableItem {
     id: string;
     labels: string[];
 }
+
+export interface SelectItem {
+    value: number;
+    label: string;
+}

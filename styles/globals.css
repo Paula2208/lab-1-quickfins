@@ -56,3 +56,11 @@ a {
 th{
   color: var(--violet);
 }
+
+.form-select{
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid var(--violet);
+  width: 100%;
+  padding: 2px;
+}

@@ -29,12 +29,12 @@ export default function CardLiving({ living }:{ living: LivingItem }) {
 
                     <DivideLine />
 
-                    <div className="card-text">Área: {`${living.area}`}m²</div>
+                    <div className="card-text">Área: {`${(living.area || '').toLocaleString()}`} m²</div>
                     <div className="card-text">Estrato: {`${living.layer}`}</div>
                     <ShowMore onClick={() => setShowComplete(true)}>Mostrar Más</ShowMore>
                 </div>
             </div>
-            {showComplete && <LivingCenter hide={() => setShowComplete(false)}/>}
+            {showComplete && <LivingCenter hide={() => setShowComplete(false)} livingBasic={living}/>}
         </>
     );
 }

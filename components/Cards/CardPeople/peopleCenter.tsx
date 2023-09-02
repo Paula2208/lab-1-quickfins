@@ -1,20 +1,23 @@
 import Modal from "../../Modal";
 import { toast } from 'react-toastify';
 import { GridTwoModal, ModalHeader, ModalTitle, TopicModalItem, TopicModalTitle } from "../../Modal/styles";
-import { useState } from "react";
-import { PersonItemExtended } from "../../../interfaces/People";
+import { useEffect, useState } from "react";
+import PersonItem, { PersonItemExtended, mockPersonExtended } from "../../../interfaces/People";
 import Table from "../../Table";
+import { getExtendsPerson } from "../../../helpers/people";
 
 type PeopleCenterProps = {
     hide: () => void,
+    personBasic: PersonItem,
 };
 
-export default function PeopleCenter({ hide }: PeopleCenterProps) {
+export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
 
     const [isUpdate, setIsUpdate] = useState<boolean>(false);
+    const [person, setPerson] = useState<PersonItemExtended>({...mockPersonExtended});
 
     const handleDelete = () => {
-        fetch(`${process.env.API_URL || ''}/personas/${person.id}`, {
+        fetch(`${process.env.API_URL || ''}/personas/${personBasic.id}`, {
             method: 'DELETE',
         })
             .then((res: any) => {
@@ -36,8 +39,8 @@ export default function PeopleCenter({ hide }: PeopleCenterProps) {
     }
 
     const saveUpdate = () => {
-        fetch(`${process.env.API_URL || ''}/personas/${person.id}`, {
-            method: 'POST',
+        fetch(`${process.env.API_URL || ''}/personas/${personBasic.id}`, {
+            method: 'PUT',
             body: JSON.stringify({}),
         })
             .then((res: any) => {
@@ -54,6 +57,10 @@ export default function PeopleCenter({ hide }: PeopleCenterProps) {
             });
     }
 
+    useEffect(() => {
+        getExtendsPerson(setPerson, personBasic);
+    }, [])
+
     return (
         <Modal
             hide={hide}
@@ -61,24 +68,24 @@ export default function PeopleCenter({ hide }: PeopleCenterProps) {
             handleDelete={handleDelete}
             handleUpdate={handleUpdate}
         >
-            <ModalTitle>{person.name}</ModalTitle>
+            <ModalTitle>{personBasic.name}</ModalTitle>
 
             <ModalHeader>Información General</ModalHeader>
             <GridTwoModal rows={5}>
                 <TopicModalTitle>ID</TopicModalTitle>
-                <TopicModalItem>{`${person.id}`}</TopicModalItem>
+                <TopicModalItem>{`${personBasic.id}`}</TopicModalItem>
 
                 <TopicModalTitle>Edad</TopicModalTitle>
-                <TopicModalItem>{`${person.age}`}</TopicModalItem>
+                <TopicModalItem>{`${personBasic.age}`}</TopicModalItem>
 
                 <TopicModalTitle>Sexo</TopicModalTitle>
-                <TopicModalItem>{person.gender}</TopicModalItem>
+                <TopicModalItem>{personBasic.gender}</TopicModalItem>
 
                 <TopicModalTitle>Teléfono</TopicModalTitle>
-                <TopicModalItem>{`${person.phone}`}</TopicModalItem>
+                <TopicModalItem>{`${personBasic.phone}`}</TopicModalItem>
 
                 <TopicModalTitle>Fecha de Nacimiento</TopicModalTitle>
-                <TopicModalItem>{`${person.birthday}`}</TopicModalItem>
+                <TopicModalItem>{`${personBasic.birthday}`}</TopicModalItem>
             </GridTwoModal>
 
             <ModalHeader>Residencia</ModalHeader>
@@ -104,7 +111,7 @@ export default function PeopleCenter({ hide }: PeopleCenterProps) {
                 headers={['Dirección', 'Área']} 
                 items={person.heritage.map((l) => ({
                     id: `${l.id}`,
-                    labels: [l.address, `${l.area}`]
+                    labels: [l.address, `${(l.area || '').toLocaleString()} m²`]
                 }))}
             />
 
@@ -119,162 +126,4 @@ export default function PeopleCenter({ hide }: PeopleCenterProps) {
 
         </Modal>
     );
-}
-
-const person: PersonItemExtended = {
-    name: 'Paula Guzmán',
-    id: 1,
-    age: 21,
-    phone: 300000000,
-    gender: 'Mujer',
-    birthday: '22/08/2002',
-
-    isGovernment: true,
-    residence: {
-        state: {
-            id: 1,
-            name: 'Cúcuta',
-            area: 109820394.93,
-            budget: 1,
-        },
-        living: {
-            id: 1,
-            address: 'Carrera 15',
-            capacity: 5,
-            levels: 3,
-            baths: 2,
-            layer: 3,
-            area: 400.2,
-        },
-    },
-    heritage: [{
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    },
-    {
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    },
-    {
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    },
-    {
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    },
-    {
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    },
-    {
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    },
-    {
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    },
-    {
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    },
-    {
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    },
-    {
-        id: 1,
-        address: 'Carrera 15',
-        capacity: 5,
-        levels: 3,
-        baths: 2,
-        layer: 3,
-        area: 400.2,
-    }],
-    dependents: [{
-        name: 'Paula Guzmán',
-        id: 1,
-        age: 21,
-        phone: 300000000,
-        gender: 'Mujer',
-        birthday: '22/08/2002',
-    },
-    {
-        name: 'Paula Guzmán',
-        id: 1,
-        age: 21,
-        phone: 300000000,
-        gender: 'Mujer',
-        birthday: '22/08/2002',
-    },
-    {
-        name: 'Paula Guzmán',
-        id: 1,
-        age: 21,
-        phone: 300000000,
-        gender: 'Mujer',
-        birthday: '22/08/2002',
-    },
-    {
-        name: 'Paula Guzmán',
-        id: 1,
-        age: 21,
-        phone: 300000000,
-        gender: 'Mujer',
-        birthday: '22/08/2002',
-    },
-    {
-        name: 'Paula Guzmán',
-        id: 1,
-        age: 21,
-        phone: 300000000,
-        gender: 'Mujer',
-        birthday: '22/08/2002',
-    }],
 }

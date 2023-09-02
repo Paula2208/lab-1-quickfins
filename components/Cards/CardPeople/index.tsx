@@ -6,8 +6,7 @@ import { DivideLine, ShowMore } from "../../../styles/styles";
 import PeopleCenter from "./peopleCenter";
 import { useState } from "react";
 
-
-export default function CardPeople({ person }:{ person: PersonItem }) {
+export default function CardPeople({ person }: { person: PersonItem }) {
 
     const [showComplete, setShowComplete] = useState<boolean>(false);
 
@@ -34,7 +33,7 @@ export default function CardPeople({ person }:{ person: PersonItem }) {
                     <ShowMore onClick={() => setShowComplete(true)}>Mostrar Más</ShowMore>
                 </div>
             </div>
-            {showComplete && <PeopleCenter hide={() => setShowComplete(false)}/>}
+            {showComplete && <PeopleCenter hide={() => setShowComplete(false)}  personBasic={person}/>}
         </>
     );
 }

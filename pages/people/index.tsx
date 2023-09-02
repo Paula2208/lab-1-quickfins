@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import SearchBar from "../../components/SearchBar";
 import PersonItem from "../../interfaces/People";
 import { getPeople } from "../../helpers/people";
+import CreatePeople from "../../components/Cards/CardPeople/createPeople";
 
 const People: NextPage = () => {
   const [search, setSearch] = useState<string>('');
   const [people, setPeople] = useState<PersonItem[]>([]);
+  const [showCreate, setShowCreate] = useState<boolean>(false);
 
   const getFiltered = (): PersonItem[] => {
     return people.filter(p => {
@@ -23,15 +25,19 @@ const People: NextPage = () => {
     })
   }
 
-  useEffect(() => {
+  const reload = () => {
     getPeople(setPeople);
+  }
+
+  useEffect(() => {
+    reload();
   }, [])
 
   return (
     <>
       <UpperRow>
         <SearchBar search={search} setSearch={setSearch} by="nombre de la persona" />
-        <ButtonAct>Crear Persona</ButtonAct>
+        <ButtonAct onClick={() => setShowCreate(true)}>Crear Persona</ButtonAct>
       </UpperRow>
       
       <GridCards>
@@ -39,6 +45,8 @@ const People: NextPage = () => {
           <CardPeople key={p.id} person={p} />
         ))}
       </GridCards>
+
+      {showCreate && <CreatePeople reload={reload} hide={() => setShowCreate(false)}/>}
     </>
   );
 };

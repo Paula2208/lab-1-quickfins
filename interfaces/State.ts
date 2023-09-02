@@ -20,3 +20,23 @@ export const mockState = {
     area: 0,
     budget: 0,
 }
+
+export const mockStateExtended = {
+    id: 0,
+    name: '',
+    area: 0,
+    budget: 0,
+
+    government: {
+        name: '',
+        id: 0,
+        age: 0,
+        phone: 0,
+        gender: '',
+        birthday: '',
+    },
+
+    livings: [],
+
+    people: []
+}

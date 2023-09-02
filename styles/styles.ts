@@ -127,3 +127,15 @@ export const UpperRow = styled.div`
   grid-template-rows: 1fr;
   grid-gap: 30px;
 `;
+
+export const InputForm = styled.input`
+  outline: none;
+  border: 1px solid var(--violet);
+  width: calc(100% - 7px);
+  border-radius: 3px;
+  padding: 2px;
+
+  &placeholder {
+      color: #a3a3c2
+  }
+`;

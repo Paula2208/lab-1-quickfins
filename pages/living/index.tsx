@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import SearchBar from "../../components/SearchBar";
 import LivingItem from "../../interfaces/Living";
 import { getLivings } from "../../helpers/living";
+import CreateLiving from "../../components/Cards/CardLiving/createLiving";
 
 const Living: NextPage = () => {
   const [search, setSearch] = useState<string>('');
+  const [showCreate, setShowCreate] = useState<boolean>(false);
   const [livings, setLivings] = useState<LivingItem[]>([]);
 
   const getFiltered = (): LivingItem[] => {
@@ -23,15 +25,17 @@ const Living: NextPage = () => {
     })
   }
 
+  const reload = () => getLivings(setLivings)
+
   useEffect(() => {
-    getLivings(setLivings);
+    reload()
   }, [])
 
   return (
     <>
       <UpperRow>
         <SearchBar search={search} setSearch={setSearch} by="dirección de la vivienda" />
-        <ButtonAct>Crear Vivienda</ButtonAct>
+        <ButtonAct onClick={() => setShowCreate(true)}>Crear Vivienda</ButtonAct>
       </UpperRow>
 
       <GridCards>
@@ -39,6 +43,8 @@ const Living: NextPage = () => {
           <CardLiving key={p.id} living={p} />
         ))}
       </GridCards>
+
+      {showCreate && <CreateLiving reload={reload} hide={() => setShowCreate(false)}/>}
     </>
   );
 };
