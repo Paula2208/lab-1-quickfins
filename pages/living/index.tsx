@@ -1,53 +1,14 @@
 import type { NextPage } from "next";
 import { ButtonAct, GridCards, UpperRow } from "../../styles/styles";
 import CardLiving from "../../components/Cards/CardLiving";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "../../components/SearchBar";
 import LivingItem from "../../interfaces/Living";
+import { getLivings } from "../../helpers/living";
 
 const Living: NextPage = () => {
-  const livings = [{
-    id: 1,
-    address: 'Carrera 15',
-    capacity: 5,
-    levels: 3,
-    baths: 2,
-    layer: 3,
-    area: 400.2,
-  }, {
-    id: 1,
-    address: 'Carrera 15',
-    capacity: 5,
-    levels: 3,
-    baths: 2,
-    layer: 3,
-    area: 400.2,
-  }, {
-    id: 1,
-    address: 'Carrera 15',
-    capacity: 5,
-    levels: 3,
-    baths: 2,
-    layer: 3,
-    area: 400.2,
-  }, {
-    id: 1,
-    address: 'Carrera 15',
-    capacity: 5,
-    levels: 3,
-    baths: 2,
-    layer: 3,
-    area: 400.2,
-  }, {
-    id: 1,
-    address: 'Carrera 15',
-    capacity: 5,
-    levels: 3,
-    baths: 2,
-    layer: 3,
-    area: 400.2,
-  }];
   const [search, setSearch] = useState<string>('');
+  const [livings, setLivings] = useState<LivingItem[]>([]);
 
   const getFiltered = (): LivingItem[] => {
     return livings.filter(p => {
@@ -61,6 +22,10 @@ const Living: NextPage = () => {
       return false;
     })
   }
+
+  useEffect(() => {
+    getLivings(setLivings);
+  }, [])
 
   return (
     <>

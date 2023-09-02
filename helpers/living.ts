@@ -10,17 +10,16 @@ export const getLivings = (
             return res.json();
         })
         .then((json: any) => {
-            console.log('viviendas pau', json)
             if(Array.isArray(json)){
-                // setLivings(json.map((s) => ({
-                //     id: number;
-                //     address: string;
-                //     capacity: number;
-                //     levels: number;
-                //     baths: number;
-                //     layer: number;
-                //     area: number;
-                // })));
+                setLivings(json.map((s) => ({
+                    id: s.idVivienda,
+                    address: s.direccion,
+                    capacity: s.capacidad,
+                    levels: s.niveles,
+                    baths: s.baños,
+                    layer: s.estrato,
+                    area: s.area
+                })));
                 return;
             }
 
