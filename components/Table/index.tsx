@@ -1,5 +1,5 @@
 import { TableItem } from "../../interfaces/Routing";
-import { DivideLineDark } from "../../pages/styles";
+import { DivideLineDark } from "../../styles/styles";
 import { TableWrapper } from "./styles";
 
 type TableProps = {

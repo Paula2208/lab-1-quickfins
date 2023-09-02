@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { ButtonAct, GridCards, UpperRow } from "../styles";
+import { ButtonAct, GridCards, UpperRow } from "../../styles/styles";
 import CardLiving from "../../components/Cards/CardLiving";
 import { useState } from "react";
 import SearchBar from "../../components/SearchBar";

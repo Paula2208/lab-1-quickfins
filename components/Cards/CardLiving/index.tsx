@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DivideLine, ShowMore } from "../../../pages/styles";
+import { DivideLine, ShowMore } from "../../../styles/styles";
 import { useState } from "react";
 import { TitleCardWrapper, TitleCardContent } from "../CardPeople/styles";
 import LivingItem from "../../../interfaces/Living";
