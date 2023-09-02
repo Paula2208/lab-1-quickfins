@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PersonItem from "../../../interfaces/People";
 import { TitleCardWrapper, TitleCardContent } from "./styles";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { DivideLine, ShowMore } from "../../../pages/styles";
+import { DivideLine, ShowMore } from "../../../styles/styles";
 import PeopleCenter from "./peopleCenter";
 import { useState } from "react";
 

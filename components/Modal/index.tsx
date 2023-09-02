@@ -1,6 +1,6 @@
 import { CardModal, ContentModal, DivModal, ModalBase, NameModal, RowModal } from "./styles";
 import { faHome, faLocationDot, faPen, faTimes, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
-import { IconClicker } from "../../pages/styles";
+import { IconClicker } from "../../styles/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type ModalProps = {

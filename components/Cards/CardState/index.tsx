@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DivideLine, ShowMore } from "../../../pages/styles";
+import { DivideLine, ShowMore } from "../../../styles/styles";
 import StateCenter from "./stateCenter";
 import { useState } from "react";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
