@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../Modal";
 import { GridTwoModal, ModalHeader, ModalTitle, TopicModalItem, TopicModalTitle } from "../../Modal/styles";
 import { toast } from 'react-toastify';
@@ -8,6 +8,9 @@ import people from "../../../pages/people";
 import { InputForm, ButtonAct } from "../../../styles/styles";
 import Selector from "../../Selector";
 import PersonItem from "../../../interfaces/People";
+import DepartmentItem from "../../../interfaces/Deparment";
+import { getDepartments } from "../../../helpers/deparment";
+import { getPeople } from "../../../helpers/people";
 
 type StateCenterProps = {
     hide: () => void,
@@ -17,6 +20,8 @@ type StateCenterProps = {
 export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
 
     const [isUpdate, setIsUpdate] = useState<boolean>(false);
+    const [department, setDepartment] = useState<DepartmentItem[]>([]);
+    const [departmentSelected, setDepartmentSelected] = useState<DepartmentItem>({...mockDep});
     const [state, setState] = useState<StateItemExtended>({ ...mockStateExtended });
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -55,7 +60,7 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
                 "nombre": address,
                 "area": capacity,
                 "presupuesto": levels,
-                "idMunicipio": stateBasic.id,
+                "id_municipio": stateBasic.id,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -74,6 +79,11 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
                 toast.error('Error editando municipio.');
             });
     }
+    
+    useEffect(() => {
+        getPeople(setPeople);
+        getDepartments(setDepartment);
+    }, [])
 
     return (
         <Modal
@@ -85,18 +95,18 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
             {isUpdate ? (
                 <>
                     <ModalHeader>Departamento *</ModalHeader>
-                    {/*<Selector
-                options={department.map()}
-                setSelected={setDepartment}
-                selected={owner}
-                placeholder={" "}
-    /> */}
+                    <Selector
+                        options={department.map(d => ({ label: d.name, value: d.id }))}
+                        setSelected={(e: number) => setDepartmentSelected(department.find(d => d.id === e) || { ...mockDep })}
+                        selected={owner}
+                        placeholder={" "}
+                    />
 
                     <ModalHeader>Información General</ModalHeader>
                     <GridTwoModal rows={2}>
 
 
-                        <TopicModalTitle>Nombre</TopicModalTitle>
+                        <TopicModalTitle>Nombre *</TopicModalTitle>
                         <InputForm
                             placeholder="Nombre del municipio"
                             onChange={(e) => setAddress(e.currentTarget.value)}
@@ -185,4 +195,10 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
             )}
         </Modal>
     );
+}
+
+
+export const mockDep = {
+    id: 0,
+    name: '',
 }

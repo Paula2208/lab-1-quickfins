@@ -123,7 +123,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                             placeholder={" "}
                         />
 
-                        <TopicModalTitle>Municipio de Colombia</TopicModalTitle>
+                        <TopicModalTitle>Municipio de Colombia *</TopicModalTitle>
                         <Selector
                             options={states.map(s => ({ label: s.name, value: s.id }))}
                             setSelected={setState}
@@ -133,7 +133,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                     </GridTwoModal>
 
 
-                    <ModalHeader>Propietario</ModalHeader>
+                    <ModalHeader>Propietario *</ModalHeader>
                     <Selector
                         options={people.map(s => ({ label: s.name, value: s.id }))}
                         setSelected={setOwner}

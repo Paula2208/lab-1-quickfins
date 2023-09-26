@@ -100,14 +100,6 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
                     <ModalHeader>Información General</ModalHeader>
                     <GridTwoModal rows={2}>
 
-                        <TopicModalTitle>Edad</TopicModalTitle>
-                        <InputForm
-                            placeholder=" "
-                            type="number"
-                            onChange={(e) => setCapacity(parseInt(e.currentTarget.value))}
-                            value={capacity}
-                        />
-
                         <TopicModalTitle>Teléfono</TopicModalTitle>
                         <InputForm
                             placeholder=" "

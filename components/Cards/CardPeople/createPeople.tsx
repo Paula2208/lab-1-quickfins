@@ -34,6 +34,7 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [address, setAddress] = useState<string>('');
+    const [document, setDocument] = useState<number>(0);
     const [capacity, setCapacity] = useState<number>(0);
     const [levels, setLevels] = useState<number>(0);
     const [baths, setBaths] = useState<number>(1);
@@ -47,7 +48,7 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
         fetch(`${process.env.API_URL || ''}/personas`, {
             method: 'POST',
             body: JSON.stringify({
-                "id_persona": 134567,
+                "id_persona": document,
                 "nombre": address,
                 "edad": capacity,
                 "telefono": levels,
@@ -122,12 +123,12 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
             <ModalHeader>Información General</ModalHeader>
             <GridTwoModal rows={2}>
 
-                <TopicModalTitle>Edad</TopicModalTitle>
+                <TopicModalTitle>Cédula *</TopicModalTitle>
                 <InputForm
                     placeholder=" "
                     type="number"
-                    onChange={(e) => setCapacity(parseInt(e.currentTarget.value))}
-                    value={capacity}
+                    onChange={(e) => setDocument(parseInt(e.currentTarget.value))}
+                    value={document}
                 />
 
                 <TopicModalTitle>Teléfono</TopicModalTitle>

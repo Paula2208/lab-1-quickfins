@@ -12,6 +12,9 @@ import PersonItem from "../../../interfaces/People";
 import { getPeople } from "../../../helpers/people";
 import LivingItem from "../../../interfaces/Living";
 import { getLivings } from "../../../helpers/living";
+import { getDepartments } from "../../../helpers/deparment";
+import DepartmentItem from "../../../interfaces/Deparment";
+import { SelectItem } from "../../../interfaces/Routing";
 
 type CreateStateProps = {
     hide: () => void,
@@ -23,7 +26,8 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [address, setAddress] = useState<string>('');
-    const [department, setDepartment] = useState<number>(0);
+    const [department, setDepartment] = useState<DepartmentItem[]>([]);
+    const [departmentSelected, setDepartmentSelected] = useState<DepartmentItem>({...mockDep});
     const [municipality, setMunicipality] = useState<number>(0);
     const [capacity, setCapacity] = useState<number>(0);
     const [levels, setLevels] = useState<number>(0);
@@ -41,7 +45,7 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
                 "nombre": address,
                 "area": capacity,
                 "presupuesto": levels,
-                "departamento_id_departamento": department,
+                "departamento_id_departamento": departmentSelected.id,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -96,6 +100,7 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
     useEffect(() => {
         getPeople(setPeople);
         getLivings(setLivings);
+        getDepartments(setDepartment);
     }, [])
 
     return (
@@ -105,12 +110,12 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
         >
 
             <ModalHeader>Departamento *</ModalHeader>
-            {/*<Selector
-                options={department.map()}
-                setSelected={setDepartment}
+            <Selector
+                options={department.map(d => ({label: d.name, value: d.id}))}
+                setSelected={(e:number) => setDepartmentSelected(department.find(d=> d.id===e)||{...mockDep})}
                 selected={owner}
                 placeholder={" "}
-    /> */}
+            />
 
 
             <ModalHeader>Información General</ModalHeader>
@@ -176,4 +181,9 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
 
         </Modal>
     );
+}
+
+export const mockDep = {
+    id: 0,
+    name: '',
 }
