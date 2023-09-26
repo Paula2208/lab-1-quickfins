@@ -136,7 +136,7 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
 
                     <ModalHeader>Información General</ModalHeader>
                     <GridTwoModal rows={5}>
-                        <TopicModalTitle>ID</TopicModalTitle>
+                        <TopicModalTitle>Cédula</TopicModalTitle>
                         <TopicModalItem>{`${personBasic.id}`}</TopicModalItem>
 
                         <TopicModalTitle>Edad</TopicModalTitle>

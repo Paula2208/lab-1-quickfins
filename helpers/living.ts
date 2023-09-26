@@ -12,14 +12,14 @@ export const getLivings = (
         .then((json: any) => {
             if(Array.isArray(json)){
                 setLivings(json.map((s) => ({
-                    id: s.idVivienda,
+                    id: s.id_vivienda,
                     address: s.direccion,
                     capacity: s.capacidad,
                     levels: s.niveles,
                     baths: s.baños,
                     layer: s.estrato,
                     area: s.area,
-                    stateID: s.idMunicipio
+                    stateID: s.municipio_id_municipio
                 })));
                 return;
             }

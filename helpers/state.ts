@@ -12,7 +12,7 @@ export const getStates = (
         .then((json: any) => {
             if(Array.isArray(json)){
                 setStates(json.map((s) => ({
-                    id: s.idMunicipio,
+                    id: s.id_municipio,
                     name: s.nombre,
                     area: s.area,
                     budget: s.presupuesto,

@@ -36,6 +36,7 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
         fetch(`${process.env.API_URL || ''}/personas`, {
             method: 'POST',
             body: JSON.stringify({
+                "id_persona": 134567,
                 "nombre": address,
                 "edad": capacity,
                 "telefono": levels,
@@ -135,13 +136,13 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
                 />
             </GridTwoModal>
 
-            <ModalHeader>Residencia</ModalHeader>
+            {/*<ModalHeader>Residencia</ModalHeader>
             <Selector
                 options={livings.map(s => ({ label: s.address, value: s.id }))}
                 setSelected={setOwner}
                 selected={owner}
                 placeholder={" "}
-            />
+    />*/}
 
             {/* <ModalHeader>Residentes</ModalHeader>
             <Selector

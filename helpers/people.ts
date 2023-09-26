@@ -1,8 +1,9 @@
 import PersonItem, { PersonItemExtended } from "../interfaces/People";
+import { formatBirthday } from "./birthday";
 
 export const getPeople = (
     setPeople: (data: PersonItem[]) => void
-) => {
+    ) => {
     fetch(`${process.env.API_URL || ''}/personas`, {
         method: 'GET',
     })
@@ -13,11 +14,11 @@ export const getPeople = (
             if(Array.isArray(json)){
                 setPeople(json.map((s) => ({
                     name: s.nombre,
-                    id: s.idPersona,
+                    id: s.id_cedula,
                     age: s.edad,
                     phone: s.telefono,
                     gender: s.sexo,
-                    birthday: s.fechaDeNacimiento
+                    birthday: formatBirthday(s.fecha_de_nacimiento)
                 })));
                 return;
             }
