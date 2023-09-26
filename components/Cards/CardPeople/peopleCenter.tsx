@@ -9,6 +9,7 @@ import { InputForm, ButtonAct } from "../../../styles/styles";
 import { gender } from "./createPeople";
 import Selector from "../../Selector";
 import { formatGender } from "../../../helpers/user";
+import { calcularEdad } from "../../../helpers/birthday";
 
 type PeopleCenterProps = {
     hide: () => void,
@@ -51,14 +52,13 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
     }
 
     const saveUpdate = () => {
+        const g = gender.find(gn => gn.value === baths)
         fetch(`${process.env.API_URL || ''}/personas/${personBasic.id}`, {
             method: 'PUT',
             body: JSON.stringify({
-                "idPersona": personBasic.id,
                 "nombre": address,
-                "edad": capacity,
                 "telefono": levels,
-                "sexo": baths,
+                "sexo": g ? g.label : "Masculino",
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -135,7 +135,7 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
                         <TopicModalItem>{`${personBasic.id}`}</TopicModalItem>
 
                         <TopicModalTitle>Edad</TopicModalTitle>
-                        <TopicModalItem>{`${personBasic.age}`}</TopicModalItem>
+                        <TopicModalItem>{`${calcularEdad(personBasic.birthday)}`}</TopicModalItem>
 
                         <TopicModalTitle>Sexo</TopicModalTitle>
                         <TopicModalItem>{personBasic.gender}</TopicModalItem>

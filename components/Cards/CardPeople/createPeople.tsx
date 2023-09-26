@@ -48,9 +48,8 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
         fetch(`${process.env.API_URL || ''}/personas`, {
             method: 'POST',
             body: JSON.stringify({
-                "id_persona": document,
+                "id_cedula": document,
                 "nombre": address,
-                "edad": capacity,
                 "telefono": levels,
                 "sexo": g ? g.label : "Masculino",
             }),
