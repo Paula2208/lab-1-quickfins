@@ -10,3 +10,8 @@ export const calcularEdad = (fecha: string) => {
     const ageDate = new Date(ageDifMs);
     return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
+
+export const getDate = (date: Date) => {
+    const month = date.getMonth() >= 10 ? date.getMonth() + 1 : `0${date.getMonth() +1}`;
+    return `${date.getFullYear()}-${month}-${date.getDate()} 00:00:00`;
+}

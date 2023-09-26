@@ -130,13 +130,13 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
                         />
                     </GridTwoModal>
 
-                    <ModalHeader>Gobernante</ModalHeader>
+                    {/* <ModalHeader>Gobernante</ModalHeader>
                     <Selector
                         options={people.map(s => ({ label: s.name, value: s.id }))}
                         setSelected={setOwner}
                         selected={owner}
                         placeholder={" "}
-                    />
+                    /> */}
 
                     <ButtonAct onClick={saveUpdate}>
                         {!loading ? 'Save' : (
@@ -162,7 +162,7 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
                         <TopicModalItem>${`${(stateBasic.budget || '').toLocaleString()}`} COP</TopicModalItem>
                     </GridTwoModal>
 
-                    <ModalHeader>Gobernante</ModalHeader>
+                    {/* <ModalHeader>Gobernante</ModalHeader>
                     <GridTwoModal rows={3}>
                         <TopicModalTitle>ID</TopicModalTitle>
                         <TopicModalItem>{`${state.government.id}`}</TopicModalItem>
@@ -190,7 +190,7 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
                             id: `${l.id}`,
                             labels: [l.name, `${l.phone}`]
                         }))}
-                    />
+                    /> */}
                 </>
             )}
         </Modal>

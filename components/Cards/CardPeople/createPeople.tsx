@@ -13,26 +13,14 @@ import { getPeople } from "../../../helpers/people";
 import LivingItem from "../../../interfaces/Living";
 import { getLivings } from "../../../helpers/living";
 import { SelectItem, SelectItemString } from "../../../interfaces/Routing";
-import React from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { getDate } from "../../../helpers/birthday";
 
 type CreatePeopleProps = {
     hide: () => void,
     reload: () => void
 };
-
-
-export default function Calendar() {
-    const [value, onChange] = useState(new Date());
-  
-    return (
-            <Calendar
-                onChange={onChange}
-                value={value}
-            />
-    );
-}
 
 export const gender: SelectItem[] = [{
     label: 'Femenino',
@@ -45,6 +33,7 @@ export const gender: SelectItem[] = [{
 
 export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
 
+    const [startDate, setStartDate] = useState(new Date());
     const [loading, setLoading] = useState<boolean>(false);
 
     const [address, setAddress] = useState<string>('');
@@ -66,6 +55,7 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
                 "nombre": address,
                 "telefono": levels,
                 "sexo": g ? g.label : "Masculino",
+                "fecha_de_nacimiento": getDate(startDate),
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -134,7 +124,7 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
             />
 
             <ModalHeader>Información General</ModalHeader>
-            <GridTwoModal rows={2}>
+            <GridTwoModal rows={4}>
 
                 <TopicModalTitle>Cédula *</TopicModalTitle>
                 <InputForm
@@ -143,8 +133,6 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
                     onChange={(e) => setDocument(parseInt(e.currentTarget.value))}
                     value={document}
                 />
-
-
 
                 <TopicModalTitle>Teléfono</TopicModalTitle>
                 <InputForm
@@ -160,6 +148,13 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
                     setSelected={setBaths}
                     selected={baths}
                     placeholder={" "}
+                />
+
+                <TopicModalTitle>Fecha de Nacimiento</TopicModalTitle>
+                <DatePicker 
+                    selected={startDate} 
+                    onChange={(date) => setStartDate(date || new Date())}
+                    showYearDropdown
                 />
             </GridTwoModal>
 

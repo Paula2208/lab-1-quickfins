@@ -9,7 +9,9 @@ import { InputForm, ButtonAct } from "../../../styles/styles";
 import { gender } from "./createPeople";
 import Selector from "../../Selector";
 import { formatGender } from "../../../helpers/user";
-import { calcularEdad } from "../../../helpers/birthday";
+import { calcularEdad, getDate } from "../../../helpers/birthday";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type PeopleCenterProps = {
     hide: () => void,
@@ -22,6 +24,7 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
     const [person, setPerson] = useState<PersonItemExtended>({ ...mockPersonExtended });
 
     const [loading, setLoading] = useState<boolean>(false);
+    const [startDate, setStartDate] = useState(new Date());
 
     const [address, setAddress] = useState<string>(personBasic.name);
     const [capacity, setCapacity] = useState<number>(personBasic.age);
@@ -59,6 +62,7 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
                 "nombre": address,
                 "telefono": levels,
                 "sexo": g ? g.label : "Masculino",
+                "fecha_de_nacimiento": getDate(startDate),
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -115,6 +119,12 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
                             selected={baths}
                             placeholder={" "}
                         />
+                        <TopicModalTitle>Fecha de Nacimiento</TopicModalTitle>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date || new Date())}
+                            showYearDropdown
+                        />
                     </GridTwoModal>
 
                     <ButtonAct onClick={saveUpdate}>
@@ -147,7 +157,7 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
                         <TopicModalItem>{`${personBasic.birthday}`}</TopicModalItem>
                     </GridTwoModal>
 
-                    <ModalHeader>Residencia</ModalHeader>
+                    {/* <ModalHeader>Residencia</ModalHeader>
                     <GridTwoModal rows={3}>
                         <TopicModalTitle>Dirección</TopicModalTitle>
                         <TopicModalItem>{person.residence.living.address}</TopicModalItem>
@@ -172,7 +182,7 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
                             id: `${l.id}`,
                             labels: [l.address, `${(l.area || '').toLocaleString()} m²`]
                         }))}
-                    />
+                    /> */}
 
                     <ModalHeader>Dependientes</ModalHeader>
                     <Table

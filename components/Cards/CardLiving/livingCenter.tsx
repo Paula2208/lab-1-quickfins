@@ -69,8 +69,8 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                 "baños": baths,
                 "estrato": layer,
                 "area": area,
-                "idMunicipio": state,
-                "idVivienda": livingBasic.id,
+                "municipio_id_municipio": state,
+                "vivienda_id_vivienda": livingBasic.id,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -133,13 +133,13 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                     </GridTwoModal>
 
 
-                    <ModalHeader>Propietario *</ModalHeader>
+                    {/* <ModalHeader>Propietario *</ModalHeader>
                     <Selector
                         options={people.map(s => ({ label: s.name, value: s.id }))}
                         setSelected={setOwner}
                         selected={owner}
                         placeholder={" "}
-                    />
+                    /> */}
 
                     <ModalHeader>Características</ModalHeader>
                     <GridTwoModal rows={4}>
@@ -203,14 +203,14 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                         <TopicModalItem>{`${livingBasic.stateID}`}</TopicModalItem>
                     </GridTwoModal>
 
-                    <ModalHeader>Propietario</ModalHeader>
+                    {/* <ModalHeader>Propietario</ModalHeader>
                     <GridTwoModal rows={2}>
                         <TopicModalTitle>ID Propietario</TopicModalTitle>
                         <TopicModalItem>{`${living.owner.id}`}</TopicModalItem>
 
                         <TopicModalTitle>Nombre</TopicModalTitle>
                         <TopicModalItem>{`${living.owner.name}`}</TopicModalItem>
-                    </GridTwoModal>
+                    </GridTwoModal> */}
 
                     <ModalHeader>Características</ModalHeader>
                     <GridTwoModal rows={4}>
@@ -247,14 +247,14 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
     </GridTwoModal>
 )*/}
 
-                    <ModalHeader>Residentes</ModalHeader>
+                    {/* <ModalHeader>Residentes</ModalHeader>
                     <Table
                         headers={['Nombre', 'Teléfono']}
                         items={living.residents.map((l) => ({
                             id: `${l.id}`,
                             labels: [l.name, `${l.phone}`]
                         }))}
-                    />
+                    /> */}
                 </>)}
 
         </Modal>

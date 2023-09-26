@@ -70,7 +70,7 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                 "baños": baths,
                 "estrato": layer,
                 "area": area,
-                "idMunicipio": state
+                "municipio_id_municipio": state
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -102,8 +102,8 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                 return fetch(`${process.env.API_URL || ''}/posee`, {
                     method: 'POST',
                     body: JSON.stringify({
-                        "idPersona": owner,
-                        "idVivienda": idVivienda,
+                        "persona_id_cedula": owner,
+                        "id_vivienda": idVivienda,
                     }),
                     headers: {
                         "Content-Type": "application/json",
@@ -224,13 +224,13 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                 </GridTwoModal>
             )*/}
 
-            <ModalHeader>Residentes</ModalHeader>
+            {/* <ModalHeader>Residentes</ModalHeader>
             <Selector
                 options={people.map(s => ({ label: s.name, value: s.id }))}
                 setSelected={setOwner}
                 selected={owner}
                 placeholder={" "}
-            />
+            /> */}
 
             <ButtonAct onClick={handleCreate}>
                 {!loading ? 'Save' : (
