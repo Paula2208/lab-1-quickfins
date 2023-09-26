@@ -5,6 +5,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { DivideLine, ShowMore } from "../../../styles/styles";
 import PeopleCenter from "./peopleCenter";
 import { useState } from "react";
+import { calcularEdad } from "../../../helpers/birthday";
 
 export default function CardPeople({ person }: { person: PersonItem }) {
 
@@ -28,7 +29,7 @@ export default function CardPeople({ person }: { person: PersonItem }) {
 
                     <DivideLine />
 
-                    <div className="card-text">Edad: {`${person.age}`}</div>
+                    <div className="card-text">Edad: {`${calcularEdad(person.birthday)}`}</div>
                     <div className="card-text">Teléfono: {`${person.phone}`}</div>
                     <ShowMore onClick={() => setShowComplete(true)}>Mostrar Más</ShowMore>
                 </div>
