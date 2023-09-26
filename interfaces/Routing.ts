@@ -12,3 +12,8 @@ export interface SelectItem {
     value: number;
     label: string;
 }
+
+export interface SelectItemString {
+    value: string;
+    label: string;
+}

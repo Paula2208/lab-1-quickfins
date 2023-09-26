@@ -23,6 +23,8 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [address, setAddress] = useState<string>('');
+    const [department, setDepartment] = useState<number>(0);
+    const [municipality, setMunicipality] = useState<number>(0);
     const [capacity, setCapacity] = useState<number>(0);
     const [levels, setLevels] = useState<number>(0);
     const [owner, setOwner] = useState<number>(0);
@@ -35,9 +37,11 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
         fetch(`${process.env.API_URL || ''}/municipios`, {
             method: 'POST',
             body: JSON.stringify({
+                "id_municipio": municipality,
                 "nombre": address,
                 "area": capacity,
                 "presupuesto": levels,
+                "departamento_id_departamento": department,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -99,16 +103,37 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
             hide={hide}
             type="STATE"
         >
-            <InputForm
-                placeholder="Nombre del municipio"
-                onChange={(e) => setAddress(e.currentTarget.value)}
-                value={address}
-            />
+
+            <ModalHeader>Departamento *</ModalHeader>
+            {/*<Selector
+                options={department.map()}
+                setSelected={setDepartment}
+                selected={owner}
+                placeholder={" "}
+    /> */}
+
 
             <ModalHeader>Información General</ModalHeader>
             <GridTwoModal rows={2}>
 
-                <TopicModalTitle>Área</TopicModalTitle>
+
+                <TopicModalTitle>Nombre *</TopicModalTitle>
+                <InputForm
+                    placeholder="Nombre del municipio"
+                    onChange={(e) => setAddress(e.currentTarget.value)}
+                    value={address}
+                />
+
+
+                <TopicModalTitle>Id Municipio *</TopicModalTitle>
+                <InputForm
+                    placeholder=" "
+                    type="number"
+                    onChange={(e) => setMunicipality(parseInt(e.currentTarget.value))}
+                    value={municipality}
+                />
+
+                <TopicModalTitle>Área (m²)</TopicModalTitle>
                 <InputForm
                     placeholder=" "
                     type="number"
@@ -116,7 +141,7 @@ export default function CreateState({ reload, hide }: CreateStateProps) {
                     value={capacity}
                 />
 
-                <TopicModalTitle>Presupuesto</TopicModalTitle>
+                <TopicModalTitle>Presupuesto (COP)</TopicModalTitle>
                 <InputForm
                     placeholder=" "
                     type="number"

@@ -10,11 +10,37 @@ import StateItem from "../../../interfaces/State";
 import living from "../../../pages/living";
 import PersonItem from "../../../interfaces/People";
 import { getPeople } from "../../../helpers/people";
+import { SelectItem } from "../../../interfaces/Routing";
 
 type CreateLivingProps = {
     hide: () => void,
     reload: () => void
 };
+
+export const stratum: SelectItem[] = [{
+    label: '1',
+    value: 1
+},
+{
+    label: '2',
+    value: 2
+},
+{
+    label: '3',
+    value: 3
+},
+{
+    label: '4',
+    value: 4
+},
+{
+    label: '5',
+    value: 5
+},
+{
+    label: '6',
+    value: 6
+}]
 
 export default function CreateLiving({ reload, hide }: CreateLivingProps) {
 
@@ -116,13 +142,19 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
             <GridTwoModal rows={2}>
 
                 <TopicModalTitle>Estrato</TopicModalTitle>
-                <InputForm
+                <Selector
+                    options={stratum}
+                    setSelected={setLayer}
+                    selected={layer}
+                    placeholder={" "}
+                />
+               {/*} <InputForm
                     type="number"
                     onChange={(e) => setLayer(parseInt(e.currentTarget.value))}
                     value={layer}
-                />
+          />*/}
 
-                <TopicModalTitle>Municipio</TopicModalTitle>
+                <TopicModalTitle>Municipio de Colombia</TopicModalTitle>
                 <Selector
                     options={states.map(s => ({ label: s.name, value: s.id }))}
                     setSelected={setState}
@@ -141,7 +173,7 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
 
             <ModalHeader>Características</ModalHeader>
             <GridTwoModal rows={4}>
-                <TopicModalTitle>Área</TopicModalTitle>
+                <TopicModalTitle>Área (m²)</TopicModalTitle>
                 <InputForm
                     placeholder=" "
                     type="number"
@@ -149,7 +181,7 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                     value={area}
                 />
 
-                <TopicModalTitle>Capacidad</TopicModalTitle>
+                <TopicModalTitle>Capacidad de Personas</TopicModalTitle>
                 <InputForm
                     placeholder=" "
                     type="number"
@@ -157,7 +189,7 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                     value={capacity}
                 />
 
-                <TopicModalTitle>Niveles</TopicModalTitle>
+                <TopicModalTitle>Cantidad de Pisos</TopicModalTitle>
                 <InputForm
                     placeholder=" "
                     type="number"
@@ -165,7 +197,7 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                     value={levels}
                 />
 
-                <TopicModalTitle>Baños</TopicModalTitle>
+                <TopicModalTitle>Cantidad de Baños</TopicModalTitle>
                 <InputForm
                     placeholder=" "
                     type="number"

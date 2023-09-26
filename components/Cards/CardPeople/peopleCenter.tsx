@@ -6,6 +6,9 @@ import PersonItem, { PersonItemExtended, mockPersonExtended } from "../../../int
 import Table from "../../Table";
 import { getExtendsPerson } from "../../../helpers/people";
 import { InputForm, ButtonAct } from "../../../styles/styles";
+import { gender } from "./createPeople";
+import Selector from "../../Selector";
+import { formatGender } from "../../../helpers/user";
 
 type PeopleCenterProps = {
     hide: () => void,
@@ -22,7 +25,7 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
     const [address, setAddress] = useState<string>(personBasic.name);
     const [capacity, setCapacity] = useState<number>(personBasic.age);
     const [levels, setLevels] = useState<number>(personBasic.phone);
-    const [baths, setBaths] = useState<string>(personBasic.gender);
+    const [baths, setBaths] = useState<number>(formatGender(personBasic.gender));
     const [owner, setOwner] = useState<number>(0);
 
     const handleDelete = () => {
@@ -114,11 +117,11 @@ export default function PeopleCenter({ hide, personBasic }: PeopleCenterProps) {
                         />
 
                         <TopicModalTitle>Sexo</TopicModalTitle>
-                        <InputForm
-                            placeholder=" "
-                            type="text"
-                            onChange={(e) => setBaths(e.currentTarget.value)}
-                            value={baths}
+                        <Selector
+                            options={gender}
+                            setSelected={setBaths}
+                            selected={baths}
+                            placeholder={" "}
                         />
                     </GridTwoModal>
 

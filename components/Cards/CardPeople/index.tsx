@@ -22,7 +22,7 @@ export default function CardPeople({ person }: { person: PersonItem }) {
                         />
                         <TitleCardContent>
                             <div className="card-title">{person.name}</div>
-                            <div className="card-subtitle mb-2 text-body-secondary">{`${person.id}`}</div>
+                            <div className="card-subtitle mb-2 text-body-secondary">{`C.C.: ${person.id}`}</div>
                         </TitleCardContent>
                     </TitleCardWrapper>
 

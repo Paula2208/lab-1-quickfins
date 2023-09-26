@@ -23,7 +23,7 @@ export default function CardLiving({ living }:{ living: LivingItem }) {
                         />
                         <TitleCardContent>
                             <div className="card-title">{living.address}</div>
-                            <div className="card-subtitle mb-2 text-body-secondary">{`${living.id}`}</div>
+                            <div className="card-subtitle mb-2 text-body-secondary">{`Vivienda No: ${living.id}`}</div>
                         </TitleCardContent>
                     </TitleCardWrapper>
 

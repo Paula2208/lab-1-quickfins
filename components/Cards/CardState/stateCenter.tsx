@@ -7,6 +7,7 @@ import Table from "../../Table";
 import people from "../../../pages/people";
 import { InputForm, ButtonAct } from "../../../styles/styles";
 import Selector from "../../Selector";
+import PersonItem from "../../../interfaces/People";
 
 type StateCenterProps = {
     hide: () => void,
@@ -22,6 +23,7 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
     const [address, setAddress] = useState<string>(stateBasic.name);
     const [capacity, setCapacity] = useState<number>(stateBasic.area);
     const [levels, setLevels] = useState<number>(stateBasic.budget);
+    const [people, setPeople] = useState<PersonItem[]>([]);
     const [owner, setOwner] = useState<number>(0);
 
     const handleDelete = () => {
@@ -82,16 +84,26 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
         >
             {isUpdate ? (
                 <>
-                    <InputForm
-                        placeholder="Nombre del municipio"
-                        onChange={(e) => setAddress(e.currentTarget.value)}
-                        value={address}
-                    />
+                    <ModalHeader>Departamento *</ModalHeader>
+                    {/*<Selector
+                options={department.map()}
+                setSelected={setDepartment}
+                selected={owner}
+                placeholder={" "}
+    /> */}
 
                     <ModalHeader>Información General</ModalHeader>
                     <GridTwoModal rows={2}>
 
-                        <TopicModalTitle>Área</TopicModalTitle>
+
+                        <TopicModalTitle>Nombre</TopicModalTitle>
+                        <InputForm
+                            placeholder="Nombre del municipio"
+                            onChange={(e) => setAddress(e.currentTarget.value)}
+                            value={address}
+                        />
+
+                        <TopicModalTitle>Área (m²)</TopicModalTitle>
                         <InputForm
                             placeholder=" "
                             type="number"
@@ -99,7 +111,7 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
                             value={capacity}
                         />
 
-                        <TopicModalTitle>Presupuesto</TopicModalTitle>
+                        <TopicModalTitle>Presupuesto (COP)</TopicModalTitle>
                         <InputForm
                             placeholder=" "
                             type="number"
@@ -107,6 +119,14 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
                             value={levels}
                         />
                     </GridTwoModal>
+
+                    <ModalHeader>Gobernante</ModalHeader>
+                    <Selector
+                        options={people.map(s => ({ label: s.name, value: s.id }))}
+                        setSelected={setOwner}
+                        selected={owner}
+                        placeholder={" "}
+                    />
 
                     <ButtonAct onClick={saveUpdate}>
                         {!loading ? 'Save' : (
@@ -125,10 +145,10 @@ export default function StateCenter({ hide, stateBasic }: StateCenterProps) {
                         <TopicModalTitle>ID</TopicModalTitle>
                         <TopicModalItem>{`${stateBasic.id}`}</TopicModalItem>
 
-                        <TopicModalTitle>Área</TopicModalTitle>
+                        <TopicModalTitle>Área (m²)</TopicModalTitle>
                         <TopicModalItem>{`${(stateBasic.area || '').toLocaleString()} m²`}</TopicModalItem>
 
-                        <TopicModalTitle>Presupuesto</TopicModalTitle>
+                        <TopicModalTitle>Presupuesto (COP)</TopicModalTitle>
                         <TopicModalItem>${`${(stateBasic.budget || '').toLocaleString()}`} COP</TopicModalItem>
                     </GridTwoModal>
 

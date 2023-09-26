@@ -12,11 +12,22 @@ import PersonItem from "../../../interfaces/People";
 import { getPeople } from "../../../helpers/people";
 import LivingItem from "../../../interfaces/Living";
 import { getLivings } from "../../../helpers/living";
+import { SelectItem, SelectItemString } from "../../../interfaces/Routing";
 
 type CreatePeopleProps = {
     hide: () => void,
     reload: () => void
 };
+
+
+export const gender: SelectItem[] = [{
+    label: 'Femenino',
+    value: 1
+},
+{
+    label: 'Masculino',
+    value: 2
+}]
 
 export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
 
@@ -25,14 +36,14 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
     const [address, setAddress] = useState<string>('');
     const [capacity, setCapacity] = useState<number>(0);
     const [levels, setLevels] = useState<number>(0);
-    const [baths, setBaths] = useState<string>('');
+    const [baths, setBaths] = useState<number>(1);
     const [owner, setOwner] = useState<number>(0);
     const [people, setPeople] = useState<PersonItem[]>([]);
     const [livings, setLivings] = useState<LivingItem[]>([]);
 
     const handleCreate = () => {
         setLoading(true);
-
+        const g = gender.find(gn => gn.value === baths)
         fetch(`${process.env.API_URL || ''}/personas`, {
             method: 'POST',
             body: JSON.stringify({
@@ -40,7 +51,7 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
                 "nombre": address,
                 "edad": capacity,
                 "telefono": levels,
-                "sexo": baths,
+                "sexo": g ? g.label : "Masculino",
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -128,11 +139,11 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
                 />
 
                 <TopicModalTitle>Sexo</TopicModalTitle>
-                <InputForm
-                    placeholder=" "
-                    type="text"
-                    onChange={(e) => setBaths(e.currentTarget.value)}
-                    value={baths}
+                <Selector
+                    options={gender}
+                    setSelected={setBaths}
+                    selected={baths}
+                    placeholder={" "}
                 />
             </GridTwoModal>
 
@@ -142,7 +153,7 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
                 setSelected={setOwner}
                 selected={owner}
                 placeholder={" "}
-    />*/}
+            />*/}
 
             {/* <ModalHeader>Residentes</ModalHeader>
             <Selector

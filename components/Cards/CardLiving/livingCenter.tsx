@@ -10,6 +10,9 @@ import { InputForm, ButtonAct } from "../../../styles/styles";
 import Selector from "../../Selector";
 import StateItem from "../../../interfaces/State";
 import { getStates } from "../../../helpers/state";
+import { stratum } from "./createLiving";
+import PersonItem from "../../../interfaces/People";
+import { getPeople } from "../../../helpers/people";
 
 type LivingCenterProps = {
     hide: () => void,
@@ -31,6 +34,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
     const [state, setState] = useState<number>(livingBasic.stateID);
     const [states, setStates] = useState<StateItem[]>([]);
     const [owner, setOwner] = useState<number>(0);
+    const [people, setPeople] = useState<PersonItem[]>([]);
     const [onSale, setOnSale] = useState<boolean>(false);
 
     const handleDelete = () => {
@@ -86,9 +90,12 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
             });
     }
 
+
     useEffect(() => {
         getStates(setStates);
+        getPeople(setPeople);
     }, [])
+
 
     return (
         <Modal
@@ -109,13 +116,14 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                     <GridTwoModal rows={2}>
 
                         <TopicModalTitle>Estrato</TopicModalTitle>
-                        <InputForm
-                            type="number"
-                            onChange={(e) => setLayer(parseInt(e.currentTarget.value))}
-                            value={layer}
+                        <Selector
+                            options={stratum}
+                            setSelected={setLayer}
+                            selected={layer}
+                            placeholder={" "}
                         />
 
-                        <TopicModalTitle>Municipio</TopicModalTitle>
+                        <TopicModalTitle>Municipio de Colombia</TopicModalTitle>
                         <Selector
                             options={states.map(s => ({ label: s.name, value: s.id }))}
                             setSelected={setState}
@@ -124,9 +132,18 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                         />
                     </GridTwoModal>
 
+
+                    <ModalHeader>Propietario</ModalHeader>
+                    <Selector
+                        options={people.map(s => ({ label: s.name, value: s.id }))}
+                        setSelected={setOwner}
+                        selected={owner}
+                        placeholder={" "}
+                    />
+
                     <ModalHeader>Características</ModalHeader>
                     <GridTwoModal rows={4}>
-                        <TopicModalTitle>Área</TopicModalTitle>
+                        <TopicModalTitle>Área (m²)</TopicModalTitle>
                         <InputForm
                             placeholder=" "
                             type="number"
@@ -134,7 +151,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                             value={area}
                         />
 
-                        <TopicModalTitle>Capacidad</TopicModalTitle>
+                        <TopicModalTitle>Capacidad de Personas</TopicModalTitle>
                         <InputForm
                             placeholder=" "
                             type="number"
@@ -142,7 +159,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                             value={capacity}
                         />
 
-                        <TopicModalTitle>Niveles</TopicModalTitle>
+                        <TopicModalTitle>Cantidad de Pisos</TopicModalTitle>
                         <InputForm
                             placeholder=" "
                             type="number"
@@ -150,7 +167,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                             value={levels}
                         />
 
-                        <TopicModalTitle>Baños</TopicModalTitle>
+                        <TopicModalTitle>Cantidad de Baños</TopicModalTitle>
                         <InputForm
                             placeholder=" "
                             type="number"
@@ -179,7 +196,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                         <TopicModalTitle>Estrato</TopicModalTitle>
                         <TopicModalItem>{`${livingBasic.layer}`}</TopicModalItem>
 
-                        <TopicModalTitle>Municipio</TopicModalTitle>
+                        <TopicModalTitle>Municipio de Colombia</TopicModalTitle>
                         <TopicModalItem>{`${living.state.name}`}</TopicModalItem>
 
                         <TopicModalTitle>ID Municipio</TopicModalTitle>
@@ -188,28 +205,25 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
 
                     <ModalHeader>Propietario</ModalHeader>
                     <GridTwoModal rows={2}>
-                        <TopicModalTitle>Nombre</TopicModalTitle>
-                        <TopicModalItem>{`${living.owner.name}`}</TopicModalItem>
-
                         <TopicModalTitle>ID Propietario</TopicModalTitle>
                         <TopicModalItem>{`${living.owner.id}`}</TopicModalItem>
 
-                        <TopicModalTitle>ID Municipio</TopicModalTitle>
-                        <TopicModalItem>{`${living.state.id}`}</TopicModalItem>
+                        <TopicModalTitle>Nombre</TopicModalTitle>
+                        <TopicModalItem>{`${living.owner.name}`}</TopicModalItem>
                     </GridTwoModal>
 
                     <ModalHeader>Características</ModalHeader>
                     <GridTwoModal rows={4}>
-                        <TopicModalTitle>Área</TopicModalTitle>
-                        <TopicModalItem>{`${(livingBasic.area || '').toLocaleString()} m²`}</TopicModalItem>
+                        <TopicModalTitle>Área (m²)</TopicModalTitle>
+                        <TopicModalItem>{`${(livingBasic.area || '').toLocaleString()}`}</TopicModalItem>
 
-                        <TopicModalTitle>Capacidad</TopicModalTitle>
+                        <TopicModalTitle>Capacidad de Personas</TopicModalTitle>
                         <TopicModalItem>{`${livingBasic.capacity}`}</TopicModalItem>
 
-                        <TopicModalTitle>Niveles</TopicModalTitle>
+                        <TopicModalTitle>Cantidad de Pisos</TopicModalTitle>
                         <TopicModalItem>{`${livingBasic.levels}`}</TopicModalItem>
 
-                        <TopicModalTitle>Baños</TopicModalTitle>
+                        <TopicModalTitle>Cantidad de Baños</TopicModalTitle>
                         <TopicModalItem>{`${livingBasic.baths}`}</TopicModalItem>
                     </GridTwoModal>
 

@@ -14,7 +14,8 @@ export const Content = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 30px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const PageContainer = styled.div`
