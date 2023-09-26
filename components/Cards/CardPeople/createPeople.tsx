@@ -13,12 +13,26 @@ import { getPeople } from "../../../helpers/people";
 import LivingItem from "../../../interfaces/Living";
 import { getLivings } from "../../../helpers/living";
 import { SelectItem, SelectItemString } from "../../../interfaces/Routing";
+import React from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 type CreatePeopleProps = {
     hide: () => void,
     reload: () => void
 };
 
+
+export default function Calendar() {
+    const [value, onChange] = useState(new Date());
+  
+    return (
+            <Calendar
+                onChange={onChange}
+                value={value}
+            />
+    );
+}
 
 export const gender: SelectItem[] = [{
     label: 'Femenino',
@@ -130,6 +144,8 @@ export default function CreatePeople({ reload, hide }: CreatePeopleProps) {
                     onChange={(e) => setDocument(parseInt(e.currentTarget.value))}
                     value={document}
                 />
+
+
 
                 <TopicModalTitle>Teléfono</TopicModalTitle>
                 <InputForm
