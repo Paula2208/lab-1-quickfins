@@ -63,3 +63,12 @@ export const mockLivingExtended = {
         onSale: false,
     },
 }
+
+export const mockSaleItem = {
+    idSale: 0,
+    idLiving: 0,
+    price: 0,
+    state: 'en venta',
+    publication: '01/08/2023',
+    onSale: false,
+}

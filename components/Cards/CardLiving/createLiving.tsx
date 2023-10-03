@@ -43,6 +43,19 @@ export const stratum: SelectItem[] = [{
     value: 6
 }]
 
+export const statusVenta: SelectItem[] = [{
+    label: 'Disponible',
+    value: 1
+},
+{
+    label: 'Vendida',
+    value: 2
+},
+{
+    label: 'Reservada',
+    value: 3
+}]
+
 export default function CreateLiving({ reload, hide }: CreateLivingProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -59,9 +72,25 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
     const [people, setPeople] = useState<PersonItem[]>([]);
     const [onSale, setOnSale] = useState<boolean>(false);
     const [price, setPrice] = useState<number>(0);
+    const [statusSell, setStatusSell] = useState<number>(0);
+
+    const getStatusVivienda = () => {
+        switch (statusSell) {
+            case 1:
+                return 'disponible';
+            case 2:
+                return 'vendida';
+            case 3:
+                return 'reservada';
+            default:
+                break;
+        }
+    }
 
     const handleCreate = () => {
         setLoading(true);
+
+        let idVivienda = '';
 
         fetch(`${process.env.API_URL || ''}/viviendas`, {
             method: 'POST',
@@ -90,12 +119,11 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                 return res.json();
             })
             .then((json: any) => {
-                let idVivienda = '';
 
                 if (Array.isArray(json)) {
                     for (let index = 0; index < json.length; index++) {
                         if (json[index].direccion === address) {
-                            idVivienda = json[index].idVivienda;
+                            idVivienda = json[index].id_vivienda;
                             break;
                         }
                     }
@@ -105,11 +133,31 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                     method: 'POST',
                     body: JSON.stringify({
                         "persona_id_cedula": owner,
-                        "id_vivienda": idVivienda,
+                        "vivienda_id_vivienda": idVivienda,
                     }),
                     headers: {
                         "Content-Type": "application/json",
                     },
+                })
+            })
+            .then((json: any) => {
+                if(onSale){
+                    return fetch(`${process.env.API_URL || ''}/viviendaEnVenta`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            'vivienda_id_vivienda': idVivienda,
+                            'persona_id_cedula': owner,
+                            'precio': price,
+                            'estado': getStatusVivienda(),
+                        }),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                }
+
+                return fetch(`${process.env.API_URL || ''}/`, {
+                    method: 'GET',
                 })
             })
             .then((res: any) => {
@@ -212,14 +260,14 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
             <RowCenter>
                 <TopicModalTitle>¿Está en venta?</TopicModalTitle>
                 <RowCenter>
-                    <InputCheckbox type="checkbox" value={price} onChange={(e) => setPrice(parseInt(e.currentTarget.value))}/>
+                    <InputCheckbox type="checkbox" onChange={(e) => setOnSale(!onSale)} />
                     <p>Si</p>
                 </RowCenter>
             </RowCenter>
 
             {(onSale) && (
-                <GridTwoModal rows={4}>
-                    <TopicModalTitle>Precio</TopicModalTitle>
+                <GridTwoModal rows={2}>
+                    <TopicModalTitle>Precio (COP)</TopicModalTitle>
                     <InputForm
                         placeholder=" "
                         type="number"
@@ -228,8 +276,12 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                     />
 
                     <TopicModalTitle>Estado</TopicModalTitle>
-                    {/* <TopicModalItem>{`${living.sale.state}`}</TopicModalItem> */}
-
+                    <Selector
+                        options={statusVenta}
+                        setSelected={setStatusSell}
+                        selected={statusSell}
+                        placeholder={" "}
+                    />
                 </GridTwoModal>
             )}
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "../../Modal";
 import { toast } from 'react-toastify';
 import { ModalTitle, ModalHeader, GridTwoModal, TopicModalItem, TopicModalTitle } from "../../Modal/styles";
-import LivingItem, { LivingItemExtended, mockLivingExtended } from "../../../interfaces/Living";
+import LivingItem, { LivingItemExtended, SaleItem, mockLivingExtended, mockSaleItem } from "../../../interfaces/Living";
 import Table from "../../Table";
 import { layer } from "@fortawesome/fontawesome-svg-core";
 import states from "../../../pages/states";
@@ -25,6 +25,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
 
     const [isUpdate, setIsUpdate] = useState<boolean>(false);
     const [living, setLiving] = useState<LivingItemExtended>({ ...mockLivingExtended });
+    const [saleLiving, setSaleLiving] = useState<SaleItem>({ ...mockSaleItem });
     const [address, setAddress] = useState<string>(livingBasic.address);
     const [layer, setLayer] = useState<number>(livingBasic.layer);
     const [capacity, setCapacity] = useState<number>(livingBasic.capacity);
@@ -63,11 +64,11 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                 return res.json();
             })
             .then((json: any) => {
-                
+
                 const result = json[0];
                 setLiving({
                     ...livingBasic,
-                    state:{
+                    state: {
                         id: result.id_municipio || '',
                         name: result.municipio || '',
                         area: 0,
@@ -91,6 +92,38 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                     },
                     residents: [],
                 })
+            })
+            .catch((err) => {
+                console.log('Get error:', err);
+                toast.error('Error leyendo vivienda.');
+            });
+    }
+
+    const handleGetEnVenta = () => {
+        fetch(`${process.env.API_URL || ''}/viviendaEnVenta`, {
+            method: 'GET',
+        })
+            .then((res: any) => {
+                return res.json();
+            })
+            .then((json: any) => {
+                const result = json;
+                let idVenta: any;
+
+                if (Array.isArray(result) && result.length > 0) {
+                    idVenta = result.find((v) => v.vivienda_id_vivienda === livingBasic.id);
+                }
+
+                if (idVenta) {
+                    setSaleLiving({
+                        idSale: idVenta.id_venta,
+                        idLiving: idVenta.vivienda_id_vivienda,
+                        price: idVenta.precio,
+                        state: idVenta.estado,
+                        publication: idVenta.fechaPublicacion,
+                        onSale: true,
+                    });
+                }
             })
             .catch((err) => {
                 console.log('Get error:', err);
@@ -133,11 +166,11 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
             });
     }
 
-
     useEffect(() => {
         getStates(setStates);
         getPeople(setPeople);
         handleGetDetails();
+        handleGetEnVenta();
     }, [])
 
 
@@ -271,25 +304,25 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                         <TopicModalItem>{`${livingBasic.baths}`}</TopicModalItem>
                     </GridTwoModal>
 
-                    {/*(living.sale.onSale) && (
-    <ModalHeader>Información de Venta</ModalHeader>
-)}
+                    {(saleLiving.onSale) && (
+                        <ModalHeader>Información de Venta</ModalHeader>
+                    )}
 
-{(living.sale.onSale) && (
-    <GridTwoModal rows={4}>
-        <TopicModalTitle>ID Venta</TopicModalTitle>
-        <TopicModalItem>{`${living.sale.idSale}`}</TopicModalItem>
+                    {(saleLiving.onSale) && (
+                        <GridTwoModal rows={4}>
+                            <TopicModalTitle>ID Venta</TopicModalTitle>
+                            <TopicModalItem>{`${saleLiving.idSale}`}</TopicModalItem>
 
-        <TopicModalTitle>Precio</TopicModalTitle>
-        <TopicModalItem>{`${living.sale.price}`}</TopicModalItem>
+                            <TopicModalTitle>Precio</TopicModalTitle>
+                            <TopicModalItem>{`${(saleLiving.price || 0).toLocaleString()} COP`}</TopicModalItem>
 
-        <TopicModalTitle>Estado</TopicModalTitle>
-        <TopicModalItem>{`${living.sale.state}`}</TopicModalItem>
+                            <TopicModalTitle>Estado</TopicModalTitle>
+                            <TopicModalItem>{`${saleLiving.state}`}</TopicModalItem>
 
-        <TopicModalTitle>Fecha de Publicación</TopicModalTitle>
-        <TopicModalItem>{`${living.sale.publication}`}</TopicModalItem>
-    </GridTwoModal>
-)*/}
+                            {/* <TopicModalTitle>Fecha de Publicación</TopicModalTitle>
+                            <TopicModalItem>{`${saleLiving.publication}`}</TopicModalItem> */}
+                        </GridTwoModal>
+                    )}
 
                     {/* <ModalHeader>Residentes</ModalHeader>
                     <Table
