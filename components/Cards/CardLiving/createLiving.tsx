@@ -11,6 +11,7 @@ import living from "../../../pages/living";
 import PersonItem from "../../../interfaces/People";
 import { getPeople } from "../../../helpers/people";
 import { SelectItem } from "../../../interfaces/Routing";
+import { InputCheckbox, RowCenter } from "./styles";
 
 type CreateLivingProps = {
     hide: () => void,
@@ -57,6 +58,7 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
     const [owner, setOwner] = useState<number>(0);
     const [people, setPeople] = useState<PersonItem[]>([]);
     const [onSale, setOnSale] = useState<boolean>(false);
+    const [price, setPrice] = useState<number>(0);
 
     const handleCreate = () => {
         setLoading(true);
@@ -90,9 +92,9 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
             .then((json: any) => {
                 let idVivienda = '';
 
-                if(Array.isArray(json)){
+                if (Array.isArray(json)) {
                     for (let index = 0; index < json.length; index++) {
-                        if(json[index].direccion === address){
+                        if (json[index].direccion === address) {
                             idVivienda = json[index].idVivienda;
                             break;
                         }
@@ -148,7 +150,7 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                     selected={layer}
                     placeholder={" "}
                 />
-               {/*} <InputForm
+                {/*} <InputForm
                     type="number"
                     onChange={(e) => setLayer(parseInt(e.currentTarget.value))}
                     value={layer}
@@ -206,23 +208,30 @@ export default function CreateLiving({ reload, hide }: CreateLivingProps) {
                 />
             </GridTwoModal>
 
-            {/*<ModalHeader>Información de Venta</ModalHeader>
+            <ModalHeader>Información de Venta</ModalHeader>
+            <RowCenter>
+                <TopicModalTitle>¿Está en venta?</TopicModalTitle>
+                <RowCenter>
+                    <InputCheckbox type="checkbox" value={price} onChange={(e) => setPrice(parseInt(e.currentTarget.value))}/>
+                    <p>Si</p>
+                </RowCenter>
+            </RowCenter>
 
             {(onSale) && (
                 <GridTwoModal rows={4}>
-                    <TopicModalTitle>ID Venta</TopicModalTitle>
-                    <TopicModalItem>{`${living.sale.idSale}`}</TopicModalItem>
-
                     <TopicModalTitle>Precio</TopicModalTitle>
-                    <TopicModalItem>{`${living.sale.price}`}</TopicModalItem>
+                    <InputForm
+                        placeholder=" "
+                        type="number"
+                        onChange={(e) => setPrice(parseInt(e.currentTarget.value))}
+                        value={price}
+                    />
 
                     <TopicModalTitle>Estado</TopicModalTitle>
-                    <TopicModalItem>{`${living.sale.state}`}</TopicModalItem>
+                    {/* <TopicModalItem>{`${living.sale.state}`}</TopicModalItem> */}
 
-                    <TopicModalTitle>Fecha de Publicación</TopicModalTitle>
-                    <TopicModalItem>{`${living.sale.publication}`}</TopicModalItem>
                 </GridTwoModal>
-            )*/}
+            )}
 
             {/* <ModalHeader>Residentes</ModalHeader>
             <Selector

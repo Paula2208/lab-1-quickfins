@@ -139,3 +139,11 @@ export const InputForm = styled.input`
       color: #a3a3c2
   }
 `;
+
+export const GridHome = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 30px;
+  width: 100%;
+`;

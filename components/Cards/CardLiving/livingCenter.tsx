@@ -55,6 +55,49 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
             });
     }
 
+    const handleGetDetails = () => {
+        fetch(`${process.env.API_URL || ''}/viviendas/${livingBasic.id || ''}`, {
+            method: 'GET',
+        })
+            .then((res: any) => {
+                return res.json();
+            })
+            .then((json: any) => {
+                
+                const result = json[0];
+                setLiving({
+                    ...livingBasic,
+                    state:{
+                        id: result.id_municipio || '',
+                        name: result.municipio || '',
+                        area: 0,
+                        budget: 0,
+                    },
+                    owner: {
+                        name: result.nombre_propietario || '',
+                        id: result.id_propietario || '',
+                        age: 18,
+                        phone: 0,
+                        gender: '',
+                        birthday: '',
+                    },
+                    sale: {
+                        idSale: 0,
+                        idLiving: result.id_vivienda || '',
+                        price: 0,
+                        state: result.id_municipio || '',
+                        publication: '',
+                        onSale: false,
+                    },
+                    residents: [],
+                })
+            })
+            .catch((err) => {
+                console.log('Get error:', err);
+                toast.error('Error leyendo vivienda.');
+            });
+    }
+
     const handleUpdate = () => {
         setIsUpdate(!isUpdate);
     }
@@ -94,6 +137,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
     useEffect(() => {
         getStates(setStates);
         getPeople(setPeople);
+        handleGetDetails();
     }, [])
 
 
@@ -203,14 +247,14 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                         <TopicModalItem>{`${livingBasic.stateID}`}</TopicModalItem>
                     </GridTwoModal>
 
-                    {/* <ModalHeader>Propietario</ModalHeader>
+                    <ModalHeader>Propietario</ModalHeader>
                     <GridTwoModal rows={2}>
                         <TopicModalTitle>ID Propietario</TopicModalTitle>
                         <TopicModalItem>{`${living.owner.id}`}</TopicModalItem>
 
                         <TopicModalTitle>Nombre</TopicModalTitle>
                         <TopicModalItem>{`${living.owner.name}`}</TopicModalItem>
-                    </GridTwoModal> */}
+                    </GridTwoModal>
 
                     <ModalHeader>Características</ModalHeader>
                     <GridTwoModal rows={4}>
