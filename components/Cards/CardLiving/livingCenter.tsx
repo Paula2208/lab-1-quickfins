@@ -146,7 +146,7 @@ export default function LivingCenter({ hide, livingBasic }: LivingCenterProps) {
                 "estrato": layer,
                 "area": area,
                 "municipio_id_municipio": state,
-                "vivienda_id_vivienda": livingBasic.id,
+                "id_vivienda": livingBasic.id,
             }),
             headers: {
                 "Content-Type": "application/json",
